@@ -1,0 +1,144 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  telephone String?
+  email     String   @unique
+  password  String
+  type      String
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Client {
+  id              Int         @id @default(autoincrement())
+  name            String
+  status          String?
+  nationality     String
+  gender          String      @db.Char(1)
+  rg              String      @db.VarChar(13)
+  cpf             String      @db.VarChar(14)
+  profession      String
+  project         Project     @relation(name: "InProject", fields: [projectId], references: [id])
+  projectId       Int
+  telephone       String
+  email           String      @unique
+  cep             String      @db.VarChar(10)
+  city            String
+  street          String
+  uf              String      @db.Char(2)
+  district        String
+  complement      String?
+  maritalStatus   String
+  partner         Partner?    @relation(name: "PartnerOf", fields: [partnerId], references: [id])
+  partnerId       Int?
+  documents       Document[]  @relation("DocumentOf")
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model Partner {
+  id              Int      @id @default(autoincrement())
+  name            String
+  nationality     String
+  gender          String   @db.Char(1)
+  rg              String   @db.VarChar(13)
+  cpf             String   @db.VarChar(14)
+  profession      String
+  telephone       String
+  email           String   @unique
+  cep             String   @db.VarChar(10)
+  city            String
+  street          String
+  uf              String   @db.Char(2)
+  district        String
+  complement      String?
+  marriageRegime  String
+  client          Client?  @relation("PartnerOf")  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Assignee {
+  id         Int          @id @default(autoincrement())
+  name       String
+  cnpj       String       @db.VarChar(18)
+  email      String       
+  telephone  String       
+  cep        String       @db.VarChar(10)
+  city       String
+  street     String
+  uf         String       @db.Char(2)
+  district   String
+  complement String?
+  admin      Adminitrator @relation(name: "AdminitratedBy", fields: [adminId], references: [id])
+  adminId    Int
+  document   Document[]   @relation("AssigneeIn")
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+}
+
+model Adminitrator {
+  id         Int          @id @default(autoincrement())
+  name       String
+  cnpj       String
+  cep        String       @db.VarChar(10)
+  city       String
+  street     String
+  uf         String       @db.Char(2)
+  district   String
+  complement String?
+  assignees  Assignee[]   @relation("AdminitratedBy")
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+}
+
+model Document {
+  id             Int        @id @default(autoincrement())
+  type           String
+  precatory      String     @unique
+  process        String
+  court          String
+  value          Float
+  correction     Float
+  fee            Float
+  preference     Float
+  taxes          Float
+  percentage     Float
+  updatedValue   Float
+  liquidValue    Float
+  proposalValue  Float
+  entity         String?
+  farmCourt      String?
+  precatoryValue Float?
+  attorneyFee    Float?
+  place          String?
+  proposalDate   DateTime?
+  contractDate   DateTime?
+  client         Client     @relation(name: "DocumentOf", fields: [clientId], references: [id])
+  clientId       Int
+  assignee       Assignee   @relation(name: "AssigneeIn", fields: [assigneeId], references: [id])
+  assigneeId     Int
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+model Project {
+  id        Int      @id @default(autoincrement())
+  name      String
+  clients   Client[] @relation("InProject")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
