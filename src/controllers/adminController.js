@@ -10,7 +10,7 @@ router.use(authMiddleware);
 
 router.get('/admins', async (req, res) => {
   try {
-    const admins = await prisma.adminitrator.findMany({
+    const admins = await prisma.administrator.findMany({
       orderBy: [
         {
           name: 'asc'
@@ -28,7 +28,7 @@ router.get('/admin/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
-    const admin = await prisma.adminitrator.findUnique({
+    const admin = await prisma.administrator.findUnique({
       where: {
         id: Number(id)
       }
@@ -53,7 +53,7 @@ router.post('/admin', async (req, res) => {
   } = req.body;
 
   try {
-    const admin = await prisma.adminitrator.create({
+    const admin = await prisma.administrator.create({
       data: {
         name,
         cnpj,
@@ -87,7 +87,7 @@ router.patch('/admin/:id', async (req, res) => {
   } = req.body;
 
   try {
-    const admin = await prisma.adminitrator.update({
+    const admin = await prisma.administrator.update({
       where: {
         id: Number(id)
       },
@@ -113,7 +113,7 @@ router.delete('/admin/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
-    const admin = await prisma.adminitrator.delete({
+    const admin = await prisma.administrator.delete({
       where: {
         id: Number(id)
       }

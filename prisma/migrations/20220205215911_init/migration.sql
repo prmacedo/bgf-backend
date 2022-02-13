@@ -85,7 +85,7 @@ CREATE TABLE "Assignee" (
 );
 
 -- CreateTable
-CREATE TABLE "Adminitrator" (
+CREATE TABLE "Administrator" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "cnpj" TEXT NOT NULL,
@@ -98,7 +98,7 @@ CREATE TABLE "Adminitrator" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "Adminitrator_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Administrator_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -164,7 +164,7 @@ ALTER TABLE "Client" ADD CONSTRAINT "Client_projectId_fkey" FOREIGN KEY ("projec
 ALTER TABLE "Client" ADD CONSTRAINT "Client_partnerId_fkey" FOREIGN KEY ("partnerId") REFERENCES "Partner"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Assignee" ADD CONSTRAINT "Assignee_adminId_fkey" FOREIGN KEY ("adminId") REFERENCES "Adminitrator"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Assignee" ADD CONSTRAINT "Assignee_adminId_fkey" FOREIGN KEY ("adminId") REFERENCES "Administrator"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Document" ADD CONSTRAINT "Document_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

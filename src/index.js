@@ -26,6 +26,6 @@ require('./controllers/projectController')(app);
 
 require('./controllers/documentController')(app);
 
-app.listen(4000, () => {
-  console.log('Servidor rodando na porta 4000');
+app.listen(process.env.PORT, () => {
+  console.log('Servidor rodando!');
 });
