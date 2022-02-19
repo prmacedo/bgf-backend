@@ -79,6 +79,7 @@ router.get('/assignee/:id', async (req, res) => {
     });
     
     assignee.cnpj = cnpjValidator.mask(assignee.cnpj)
+    assignee.admin.cnpj = cnpjValidator.mask(assignee.admin.cnpj)
 
     return res.send(assignee);
   } catch (error) {

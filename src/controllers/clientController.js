@@ -18,8 +18,9 @@ router.get('/clients', async (req, res) => {
       }
     });
 
-    clients.map(client => (
-      client.cpf = cpfValidator.mask(client.cpf)
+    clientList.map(client => (
+      client.cpf = cpfValidator.mask(client.cpf),
+      client.partner.cpf = cpfValidator.mask(client.partner.cpf) 
     ))
     
     return res.send(clientList);
@@ -43,6 +44,7 @@ router.get('/client/:id', async (req, res) => {
     });
 
     client.cpf = cpfValidator.mask(client.cpf)
+    client.partner.cpf = cpfValidator.mask(client.partner.cpf) 
 
     return res.send(client)
   } catch (error) {
@@ -57,7 +59,6 @@ router.post('/client', async (req, res) => {
     gender,
     maritalStatus,
     profession,
-    cpf,
     rg,
     email,
     telephone,
