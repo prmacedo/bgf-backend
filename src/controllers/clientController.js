@@ -1,5 +1,6 @@
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
+const cpfValidator = require('node-cpf');
 
 const authMiddleware = require('../middlewares/auth');
 
@@ -16,6 +17,10 @@ router.get('/clients', async (req, res) => {
         project: true        
       }
     });
+
+    clients.map(client => (
+      client.cpf = cpfValidator.mask(client.cpf)
+    ))
     
     return res.send(clientList);
   } catch (error) {
@@ -36,6 +41,8 @@ router.get('/client/:id', async (req, res) => {
         project: true
       }
     });
+
+    client.cpf = cpfValidator.mask(client.cpf)
 
     return res.send(client)
   } catch (error) {
@@ -63,6 +70,12 @@ router.post('/client', async (req, res) => {
     projectId,
     partnerId
   } = req.body;
+
+  const cpf = cpfValidator.unMask(req.body.cpf);
+
+  if (!cpfValidator.validate(cpf)) {
+    return res.status(422).send({ error: 'Invalid CPF' })
+  }
 
   try {
     const client = await prisma.client.create({
@@ -104,7 +117,6 @@ router.patch('/client/:id', async (req, res) => {
     gender,
     maritalStatus,
     profession,
-    cpf,
     rg,
     email,
     telephone,
@@ -117,6 +129,12 @@ router.patch('/client/:id', async (req, res) => {
     projectId,
     partnerId
   } = req.body;
+
+  const cpf = cpfValidator.unMask(req.body.cpf);
+
+  if (!cpfValidator.validate(cpf)) {
+    return res.status(422).send({ error: 'Invalid CPF' })
+  }
 
   try {
     const client = await prisma.client.update({

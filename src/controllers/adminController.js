@@ -1,5 +1,6 @@
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
+const cnpjValidator = require('node-cnpj');
 
 const authMiddleware = require('../middlewares/auth');
 
@@ -18,6 +19,10 @@ router.get('/admins', async (req, res) => {
       ]
     });
 
+    admins.map(admin => (
+      admin.cnpj = cnpjValidator.mask(admin.cnpj)
+    ))
+
     return res.send(admins);
   } catch (error) {
     return res.send({ error: error.message });
@@ -34,6 +39,8 @@ router.get('/admin/:id', async (req, res) => {
       }
     });
 
+    admin.cnpj = cnpjValidator.mask(admin.cnpj);
+
     return res.send(admin);
   } catch (error) {
     return res.send({ error: error.message });
@@ -43,7 +50,6 @@ router.get('/admin/:id', async (req, res) => {
 router.post('/admin', async (req, res) => {
   const {
     name,
-    cnpj,
     cep,
     street,
     city,
@@ -51,6 +57,12 @@ router.post('/admin', async (req, res) => {
     district,
     complement
   } = req.body;
+
+  const cnpj = cnpjValidator.unMask(req.body.cnpj);
+
+  if (!cnpjValidator.validate(cnpj)) {
+    return res.status(422).send({ error: 'Invalid CNPJ'})
+  }
 
   try {
     const admin = await prisma.administrator.create({
@@ -77,7 +89,6 @@ router.patch('/admin/:id', async (req, res) => {
 
   const {
     name,
-    cnpj,
     cep,
     street,
     city,
@@ -85,6 +96,12 @@ router.patch('/admin/:id', async (req, res) => {
     district,
     complement
   } = req.body;
+
+  const cnpj = cnpjValidator.unMask(req.body.cnpj);
+
+  if (!cnpjValidator.validate(cnpj)) {
+    return res.status(422).send({ error: 'Invalid CNPJ' })
+  }
 
   try {
     const admin = await prisma.administrator.update({

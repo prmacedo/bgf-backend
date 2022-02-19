@@ -1,5 +1,6 @@
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
+const cpfValidator = require('node-cpf');
 
 const authMiddleware = require('../middlewares/auth');
 
@@ -18,6 +19,8 @@ router.get('/partner/:id', async (req, res) => {
       }
     });
 
+    partner.cpf = cpfValidator.mask(partner.cpf)
+
     return res.send(partner)
   } catch (error) {
     return res.send({ error: error.message });
@@ -31,7 +34,6 @@ router.post('/partner', async (req, res) => {
     gender,
     marriageRegime,
     profession,
-    cpf,
     rg,
     email,
     telephone,
@@ -42,6 +44,12 @@ router.post('/partner', async (req, res) => {
     district,
     complement
   } = req.body;
+
+  const cpf = cpfValidator.unMask(req.body.cpf);
+
+  if (!cpfValidator.validate(cpf)) {
+    return res.status(422).send({ error: 'Invalid CPF' })
+  }
 
   try {
     const partner = await prisma.partner.create({
@@ -79,7 +87,6 @@ router.patch('/partner/:id', async (req, res) => {
     gender,
     marriageRegime,
     profession,
-    cpf,
     rg,
     email,
     telephone,
@@ -90,6 +97,12 @@ router.patch('/partner/:id', async (req, res) => {
     district,
     complement
   } = req.body;
+
+  const cpf = cpfValidator.unMask(req.body.cpf);
+
+  if (!cpfValidator.validate(cpf)) {
+    return res.status(422).send({ error: 'Invalid CPF' })
+  }
 
   try {
     const partner = await prisma.partner.update({
