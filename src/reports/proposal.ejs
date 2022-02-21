@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proposta</title>
+
+  <style>
+    :root{
+      font-size: 15px;
+    }
+
+    body {
+      text-align: justify;
+      margin: 3.6rem 4.2rem;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+
+    .underline {
+      text-decoration: underline;
+    }
+
+    .red {
+      color: red;
+    }
+
+    .green {
+      color: green;
+    }
+
+    .signature {
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+      justify-content: center;
+
+      gap: 0.5rem;
+
+      margin-top: 1.5rem;
+    }
+
+    .signature p {
+      margin: 0;
+    }
+
+    th, tr > td { text-align: center; }
+
+    tr > td:nth-of-type(3) { 
+      text-align:  right;
+      padding-right: 0.5rem;
+    }
+
+    .table-container {
+      display: flex;
+      justify-content: center;
+    }    
+
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+      padding: 0.25rem 0.5rem;
+
+      font-family: sans-serif;
+    }
+
+    th {
+      padding: 1rem 0;
+      font-size: 1rem;
+    }
+
+    td {
+      font-size: 0.75rem;
+    }
+
+    table, th { border: 2px solid black; }
+
+    .bg-gray {
+      background-color: gray;
+    }
+
+    .bg-light-gray {
+      background-color: lightgray;
+    }
+
+    .money > div{
+      display: grid;
+      grid-template-columns: 4ch 1fr;
+      gap: 1ch;
+
+      align-items: center;
+
+      text-align: right;
+    }
+
+    header {
+      display: flex;
+      justify-content: center;
+    }
+
+    header img {
+      width: 5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <img src="/images/BGF.png" alt="Logo BGF">
+  </header>
+  <main>
+    <div>
+      <p><%= document.place %>, (<%= document.proposalDate %>)</p>
+      <p class="bold">Ref.: Precatório n.º <%= document.precatory %></p>
+    </div>
+
+    <div>
+      <p class="bold">Prezado Sr(a). <%= document.client.name %>,</p>
+      <p>
+        Primeiramente, gostaríamos de demonstrar nossa satisfação em seu interesse. Não temos dúvidas de que esta
+        parceria será construída com uma <span class="bold">visão de longo prazo, preço justo, transparência e
+          seriedade.</span>
+      </p>
+
+      <p>
+        Dando prosseguimento às nossas negociações, a <span class="bold underline"><%= document.type %> Capital</span> vem,
+        por meio deste, apresentar <span class="bold underline">precificação referencial</span>, sujeita a análise das
+        informações necessárias, do <span class="bold underline">Precatório n.º <%= document.precatory %>, referente ao Processo n.º <%= document.process %></span>, nos seguintes termos:
+      </p>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead class="bg-gray">
+          <th colspan="3">Proposta BRV/SAFRA</th>
+        </thead>
+        <tbody>
+          <tr class="bold bg-light-gray">
+            <td>A</td>
+            <td>Valor Histórico - Bruto <br /> (Principal - Líquido de Honorários)</td>
+            <td class="money">
+              <div>              
+                <span>R$</span>
+                <span><%= document.value %></span>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td>B</td>
+            <td>Correção</td>
+            <td class="money">
+              <div>              
+                <span>R$</span>
+                <span><%= document.correction %></span>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td>C</td>
+            <td>Juros</td>
+            <td class="money">
+              <div>              
+                <span>R$</span>
+                <span><%= document.fee %></span>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="red">
+            <td>D</td>
+            <td>Dedução - Preferência</td>
+            <td class="money">
+              <div>              
+                <span>- R$</span>
+                <span><%= document.preference %></span>
+              </td>
+            </div>
+          </tr>
+
+          <tr class="bold bg-light-gray">
+            <td>E</td>
+            <td>Valor Atualizado - Bruto <br /> (A+B+C-D)</td>
+            <td class="money">
+              <div>              
+                <span>R$</span>
+                <span><%= document.updatedValue %></span>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="red">
+            <td>F</td>
+            <td>Retenção - Tributos</td>
+            <td class="money">
+              <div>              
+                <span>- R$</span>
+                <span><%= document.taxes %></span>
+              </td>
+            </div>
+          </tr>
+
+          <tr class="bold bg-light-gray">
+            <td>G</td>
+            <td>Valor Líquido (E-F)</td>
+            <td class="money">
+              <div>              
+                <span>R$</span>
+                <span><%= document.liquidValue %></span>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="green">
+            <td>H</td>
+            <td>Proposta %</td>
+            <td><%= document.percentage %>%</td>
+          </tr>
+
+          <tr class="green">
+            <td>I</td>
+            <td>Proposta R$</td>
+            <td class="money">
+              <div>              
+                <span>R$</span>
+                <span><%= document.proposalValue %></span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <p>
+        Importante ressaltar que essa é uma análise prévia do seu ativo, com base em informações públicas
+        disponibilizadas pelo <span class="bold"><%= document.court %></span>, e, por isso, os
+        valores acima podem sofrer alteração após a verificação da cópia integral do precatório.
+      </p>
+
+      <p>
+        Assim, para a concretização da proposta se faz necessária a diligência de documentos - inclusive, a
+        disponibilização da cópia integral do Precatório - e aprovação interna do <span class="bold underline"><%= document.assignee.name %></span>.
+      </p>
+
+      <p>
+        <span class="bold underline">Vencida esta etapa,</span> após a formalização da cessão em Escritura Pública de
+        Cessão, o equivalente a <span class="bold"><%= document.percentage %>%</span> do valor líquido do Precatório, será transferido à sua
+        conta corrente em até 2 dias úteis.
+      </p>
+
+      <p>
+        Colocamo-nos inteiramente à disposição de V.Sa. para quaisquer esclarecimentos que se façam necessários e
+        aguardamos o seu <span class="bold underline">DE ACORDO</span> para avançarmos à próxima etapa.
+      </p>
+    </div>
+  </main>
+  <footer>
+    <div class="signature">
+      <% if(document.type === "BRV") { %>
+      <p class="bold">
+        BRV ASSESSORIA E PLANEJAMENTO EMPRESARIAL LTDA
+      </p>      
+      <p>
+        CNPJ/MF nº 36.269.706/0001-09
+      </p>
+
+      <% } else { %>
+      <p class="bold">
+        BGF ASSESSORIA E PLANEJAMENTO EMPRESARIAL LTDA
+      </p>      
+      <p>
+        CNPJ/MF nº 33.521.132/0001-18
+      </p>
+      <% } %>
+    </div>
+  </footer>
+</body>
+
+</html>
