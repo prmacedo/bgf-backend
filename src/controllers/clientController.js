@@ -19,9 +19,14 @@ router.get('/clients', async (req, res) => {
     });
 
     clientList.map(client => (
-      client.cpf = cpfValidator.mask(client.cpf),
-      client.partner.cpf = cpfValidator.mask(client.partner.cpf) 
+      client.cpf = cpfValidator.mask(client.cpf)
     ))
+
+    clientList.map(client => {
+      if (client.partner) {
+        return client.partner.cpf = cpfValidator.mask(client.partner.cpf)
+      }
+    })
     
     return res.send(clientList);
   } catch (error) {
@@ -44,7 +49,10 @@ router.get('/client/:id', async (req, res) => {
     });
 
     client.cpf = cpfValidator.mask(client.cpf)
-    client.partner.cpf = cpfValidator.mask(client.partner.cpf) 
+    
+    if (client.partner) {
+      client.partner.cpf = cpfValidator.mask(client.partner.cpf)   
+    }
 
     return res.send(client)
   } catch (error) {
