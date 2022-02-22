@@ -243,45 +243,45 @@ router.delete('/document/:id', async (req, res) => {
   }
 });
 
-router.get('/download/proposal/pdf/:id', async (request, response) => {
-  const { id } = request.params;
+// router.get('/download/proposal/pdf/:id', async (request, response) => {
+//   const { id } = request.params;
 
-  const browser = await puppeteer.launch()
-  const page = await browser.newPage()
+//   const browser = await puppeteer.launch()
+//   const page = await browser.newPage()
 
-  // page.setExtraHTTPHeaders({
-  //   'authorization': request.headers.authorization
-  // })
+//   // page.setExtraHTTPHeaders({
+//   //   'authorization': request.headers.authorization
+//   // })
 
-  const urlToDownload = `${process.env.SERVER_PDF_URL}/generate/proposal/pdf/${id}`;
+//   const urlToDownload = `${process.env.SERVER_PDF_URL}/generate/proposal/pdf/${id}`;
 
-  await page.goto(urlToDownload, {
-    waitUntil: 'networkidle0'
-  })
+//   await page.goto(urlToDownload, {
+//     waitUntil: 'networkidle0'
+//   })
 
-  const name = 'Proposta.pdf'
+//   const name = 'Proposta.pdf'
 
-  const pdf = await page.pdf({
-    printBackground: true,
-    format: 'Letter',
-    path: "./src/proposta.pdf"
-  })
+//   const pdf = await page.pdf({
+//     printBackground: true,
+//     format: 'Letter',
+//     path: "./src/proposta.pdf"
+//   })
 
-  await browser.close()
+//   await browser.close()
 
-  response.contentType("application/pdf")
+//   response.contentType("application/pdf")
   
-  const filePath = path.join(__dirname, "../", "proposta.pdf");
+//   const filePath = path.join(__dirname, "../", "proposta.pdf");
 
-  // return response.send(pdf)
+//   // return response.send(pdf)
 
-  return response.download(filePath, name, (err) => {
-    if (err)
-      console.log(err)
+//   return response.download(filePath, name, (err) => {
+//     if (err)
+//       console.log(err)
     
-    console.log("ok");
-  });
-})
+//     console.log("ok");
+//   });
+// })
 
 // router.get('/generate/proposal/pdf/:id', async (request, response) => {
 //   const { id } = request.params;
