@@ -5,7 +5,8 @@ const app = express();
 
 const corsOptions = {
   allowedHeaders: ['Authorization', 'Content-Type'],
-  origin: true
+  origin: true,
+  methods: ['GET', 'PUT', 'POST', 'PATCH', 'DELETE']
 }
 
 app.use(cors(corsOptions));
