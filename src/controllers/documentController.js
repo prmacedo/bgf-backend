@@ -246,7 +246,7 @@ router.delete('/document/:id', async (req, res) => {
 router.get('/download/proposal/pdf/:id', async (request, response) => {
   const { id } = request.params;
 
-  const browser = await puppeteer.launch()
+  const browser = await puppeteer.launch({ args: ['--no-sandbox'] })
   const page = await browser.newPage()
 
   page.setExtraHTTPHeaders({
