@@ -60,6 +60,87 @@ router.get('/client/:id', async (req, res) => {
   }
 });
 
+router.get('/clients/:filter', async (req, res) => {
+  const { filter } = req.params;
+
+  try {
+    const clients = await prisma.client.findMany({
+      where: {
+        OR: [
+          {
+            name: {
+              contains: filter,
+              mode: 'insensitive'
+            }
+          },
+          {
+            project: {
+              name: {
+                contains: filter,
+                mode: 'insensitive'
+              }
+            }
+          }
+        ],
+      }
+    });
+
+    return res.send(clients);
+  } catch (error) {
+    return res.send({ error: error.message })
+  }
+});
+
+router.get('/clients/:name/:project/:status', async (req, res) => {
+  const { name, project, status } = req.params;
+
+  let arrayToSearch = [];
+
+  if (name !== 'undefined') {
+    const nameFilterObj = {
+      name: {
+        contains: name,
+        mode: 'insensitive'
+      }
+    }
+    arrayToSearch.push(nameFilterObj)
+  }
+
+  if (project !== 'undefined') {
+    const projectFilterObj = {
+      project: {
+        name: {
+          contains: project,
+          mode: 'insensitive'
+        }
+      }
+    }
+    arrayToSearch.push(projectFilterObj)
+  }
+
+  if (status !== 'undefined') {
+    const statusFilterObj = {
+      status: {
+        contains: status,
+        mode: 'insensitive'
+      }
+    }
+    arrayToSearch.push(statusFilterObj)
+  }
+
+  try {
+    const clients = await prisma.client.findMany({
+      where: {
+        AND: arrayToSearch,
+      }
+    });
+
+    return res.send(clients)
+  } catch (error) {
+    return res.send({ error: error.message })
+  }
+});
+
 router.post('/client', async (req, res) => {
   const {
     name,
