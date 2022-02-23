@@ -32,6 +32,8 @@ router.get('/assignees', async (req, res) => {
 router.get('/assignees/:filter', async (req, res) => {
   const { filter } = req.params;
 
+  const cnpjFilter = cnpjValidator.unMask(filter);
+
   try {
     const assignees = await prisma.assignee.findMany({where: {
         OR: [
@@ -43,7 +45,7 @@ router.get('/assignees/:filter', async (req, res) => {
           },
           {
             cnpj: {
-              contains: filter
+              contains: cnpjFilter
             }
           }
         ]
