@@ -250,7 +250,8 @@ router.get('/download/proposal/pdf/:id', async (request, response) => {
   const page = await browser.newPage()
 
   page.setExtraHTTPHeaders({
-    'authorization': request.headers.authorization
+    'authorization': request.headers.authorization,
+    'Access-Control-Allow-Origin': process.env.CORS_ORIGIN_URL
   })
 
   const urlToDownload = `${process.env.SERVER_PDF_URL}/generate/proposal/pdf/${id}`;
