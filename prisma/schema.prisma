@@ -45,6 +45,7 @@ model Client {
   partner         Partner?    @relation(name: "PartnerOf", fields: [partnerId], references: [id])
   partnerId       Int?
   documents       Document[]  @relation("DocumentOf")
+  attachments     Attachment[] @relation("AttachmentOf")
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
 }
@@ -139,6 +140,18 @@ model Project {
   id        Int      @id @default(autoincrement())
   name      String
   clients   Client[] @relation("InProject")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Attachment {
+  id        Int      @id @default(autoincrement())
+  name      String
+  size      Float
+  key       String
+  url       String
+  client    Client   @relation(name: "AttachmentOf", fields: [clientId], references: [id])
+  clientId  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

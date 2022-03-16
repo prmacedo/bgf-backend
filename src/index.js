@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { PrismaClient } = require('@prisma/client');
+//const path = require('path');
 
 const app = express();
 
@@ -14,6 +14,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(express.static("public"));
+//app.use("/file", express.static(path.resolve(__dirname, "..", "tmp", "attachment")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -36,6 +37,7 @@ require('./controllers/adminController')(app);
 require('./controllers/projectController')(app);
 
 require('./controllers/documentController')(app);
+require('./controllers/attachmentController')(app);
 
 app.listen(process.env.PORT, () => {
   console.log('Servidor rodando!');

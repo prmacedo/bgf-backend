@@ -254,7 +254,7 @@ router.get('/download/proposal/pdf/:id', async (request, response) => {
     'Access-Control-Allow-Origin': process.env.CORS_ORIGIN_URL
   })
 
-  const urlToDownload = `${process.env.SERVER_PDF_URL}/generate/proposal/pdf/${id}`;
+  const urlToDownload = `${process.env.APP_URL}/generate/proposal/pdf/${id}`;
 
   await page.goto(urlToDownload, {
     waitUntil: 'networkidle0'
@@ -336,7 +336,7 @@ router.get('/download/contract/pdf/:id', async (request, response) => {
     'authorization': request.headers.authorization
   })
 
-  const urlToDownload = `${process.env.SERVER_PDF_URL}/generate/proposal/pdf/${id}`;
+  const urlToDownload = `${process.env.APP_URL}/generate/proposal/pdf/${id}`;
 
   await page.goto(urlToDownload, {
     waitUntil: 'networkidle0'
