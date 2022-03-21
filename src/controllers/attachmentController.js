@@ -12,7 +12,8 @@ const prisma = new PrismaClient();
 const router = express.Router();
 const s3 = new aws.S3();
 
-router.post("/attachment", multer(multerConfig).single('file'), async (req, res) => {
+router.post("/attachment/:id", multer(multerConfig).single('file'), async (req, res) => {
+  const { id } = req.params;
   const { originalname: name, size, key } = req.file;
   let { location: url = "" } = req.file;
   
@@ -25,7 +26,7 @@ router.post("/attachment", multer(multerConfig).single('file'), async (req, res)
       size,
       key,
       url,
-      clientId: 1
+      clientId: Number(id)
     }
   });
 
@@ -55,8 +56,13 @@ router.delete("/attachment/:id", async (req, res) => {
   }
 });
 
-router.get("/attachments", async (req, res) => {
-  const attachments = await prisma.attachment.findMany();
+router.get("/attachment/:id", async (req, res) => {
+  const { id } = req.params;
+  const attachments = await prisma.attachment.findMany({
+    where: {
+      clientId: Number(id)
+    }
+  });
 
   res.send(attachments);
 })
