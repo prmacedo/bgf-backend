@@ -19,7 +19,10 @@ router.get('/clients', async (req, res) => {
     const clientList = await prisma.client.findMany({
       include: {
         partner: true,
-        project: true        
+        project: true,
+        _count: {
+          select: { attachments: true }
+        }       
       }
     });
 
@@ -49,7 +52,10 @@ router.get('/client/:id', async (req, res) => {
       },
       include: {
         partner: true,
-        project: true
+        project: true,
+        _count: {
+          select: { attachments: true }
+        } 
       }
     });
 
@@ -89,7 +95,10 @@ router.get('/clients/:filter', async (req, res) => {
         ],
       },
       include: {
-        project: true
+        project: true,
+        _count: {
+          select: { attachments: true }
+        } 
       }
     });
 
