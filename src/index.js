@@ -4,21 +4,12 @@ const cors = require('cors');
 
 const app = express();
 
-const corsOptions = {
-  allowedHeaders: ['Authorization', 'Content-Type', 'Content-Length'],
-  origin: process.env.CORS_ORIGIN_URL,
-  methods: ['GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
-  credentials: true
-}
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(express.static("public"));
 //app.use("/file", express.static(path.resolve(__dirname, "..", "tmp", "attachment")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-app.options('*', cors());
 
 app.get('/', (req, res) => {
   res.send({ ok: true });
