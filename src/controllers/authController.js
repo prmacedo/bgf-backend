@@ -23,6 +23,8 @@ router.post('/authenticate', async(req, res) => {
       where: {
         email
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     

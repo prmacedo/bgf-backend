@@ -17,6 +17,8 @@ router.get('/partner/:id', async (req, res) => {
       where: {
         id: Number(id)
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     partner.cpf = cpfValidator.mask(partner.cpf)
@@ -70,6 +72,8 @@ router.post('/partner', async (req, res) => {
         district,
         complement
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(partner)
@@ -126,6 +130,8 @@ router.patch('/partner/:id', async (req, res) => {
         district,
         complement
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(partner);
@@ -142,6 +148,8 @@ router.delete('/partner/:id', async (req, res) => {
       where: {
         id: Number(id)
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(partner);

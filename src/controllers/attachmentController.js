@@ -28,6 +28,8 @@ router.post("/attachment/:id", multer(multerConfig).single('file'), async (req, 
       url,
       clientId: Number(id)
     }
+  }).finally(async () => {
+    await prisma.$disconnect();
   });
 
   console.log(req.file);
@@ -41,6 +43,8 @@ router.delete("/attachment/:id", async (req, res) => {
     where: {
       id: Number(id)
     }
+  }).finally(async () => {
+    await prisma.$disconnect();
   });
 
   if (process.env.STORAGE_TYPE === 's3') {
@@ -62,6 +66,8 @@ router.get("/attachment/:id", async (req, res) => {
     where: {
       clientId: Number(id)
     }
+  }).finally(async () => {
+    await prisma.$disconnect();
   });
 
   res.send(attachments);

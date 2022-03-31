@@ -17,6 +17,8 @@ router.get('/assignees', async (req, res) => {
           name: 'asc'
         }
       ]
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     assignees.map(assignee => (
@@ -55,6 +57,8 @@ router.get('/assignees/:filter', async (req, res) => {
           name: 'asc'
         }
       ]
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     assignees.map(assignee => (
@@ -78,6 +82,8 @@ router.get('/assignee/:id', async (req, res) => {
       where:{
         id: Number(id)
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
     
     assignee.cnpj = cnpjValidator.mask(assignee.cnpj)
@@ -126,6 +132,8 @@ router.post('/assignee', async (req, res) => {
           connect: { id: adminId }
         }
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(assignee);
@@ -173,6 +181,8 @@ router.patch('/assignee/:id', async (req, res) => {
         district,
         complement
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(assignee);
@@ -189,6 +199,8 @@ router.delete('/assignee/:id', async (req, res) => {
       where:{
         id: Number(id)
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(assignee);

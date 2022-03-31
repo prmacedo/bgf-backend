@@ -24,6 +24,8 @@ router.get('/clients', async (req, res) => {
           select: { attachments: true }
         }       
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     clientList.map(client => (
@@ -57,6 +59,8 @@ router.get('/client/:id', async (req, res) => {
           select: { attachments: true }
         } 
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     client.cpf = cpfValidator.mask(client.cpf)
@@ -100,6 +104,8 @@ router.get('/clients/:filter', async (req, res) => {
           select: { attachments: true }
         } 
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(clients);
@@ -152,6 +158,8 @@ router.get('/clients/:name/:project/:status', async (req, res) => {
       include: {
         project: true
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(clients)
@@ -166,6 +174,8 @@ router.get('/export/csv', async (req, res) => {
       include: {        
         project: true
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     clientList.map(client => (
@@ -253,6 +263,8 @@ router.post('/client', async (req, res) => {
         },
         partner: partnerId ? { connect: { id: partnerId } } : undefined
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(client)
@@ -313,6 +325,8 @@ router.patch('/client/:id', async (req, res) => {
         projectId,
         partnerId
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(client);
@@ -329,6 +343,8 @@ router.delete('/client/:id', async (req, res) => {
       where: {
         id: Number(id)
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(client);

@@ -16,6 +16,8 @@ router.get('/projects', async (req, res) => {
           name: 'asc'
         }
       ]
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(projects);
@@ -31,6 +33,8 @@ router.post('/project', async (req, res) => {
       data: {
         name     
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(project);

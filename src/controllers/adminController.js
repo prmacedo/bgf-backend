@@ -17,6 +17,8 @@ router.get('/admins', async (req, res) => {
           name: 'asc'
         }
       ]
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     admins.map(admin => (
@@ -37,6 +39,8 @@ router.get('/admin/:id', async (req, res) => {
       where: {
         id: Number(id)
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     admin.cnpj = cnpjValidator.mask(admin.cnpj);
@@ -76,6 +80,8 @@ router.post('/admin', async (req, res) => {
         district,
         complement
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(admin);
@@ -118,6 +124,8 @@ router.patch('/admin/:id', async (req, res) => {
         district,
         complement
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(admin);
@@ -134,6 +142,8 @@ router.delete('/admin/:id', async (req, res) => {
       where: {
         id: Number(id)
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(admin);

@@ -23,6 +23,8 @@ router.get('/document/:id', async (req, res) => {
       where: {
         id: Number(id)
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(document)
@@ -51,6 +53,8 @@ router.get('/contract/:id', async (req, res) => {
       where: {
         id: Number(id)
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(document)
@@ -67,6 +71,8 @@ router.get('/proposal/byUser/:id', async (req, res) => {
       where: {
         clientId: Number(id)
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(document)
@@ -90,6 +96,8 @@ router.get('/contract/byUser/:id/', async (req, res) => {
           }
         ]
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(document)
@@ -154,6 +162,8 @@ router.post('/document', async (req, res) => {
           connect: { id: assigneeId }
         }
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(document)
@@ -219,6 +229,8 @@ router.patch('/document/:id', async (req, res) => {
         clientId,
         assigneeId
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(document);
@@ -235,6 +247,8 @@ router.delete('/document/:id', async (req, res) => {
       where: {
         id: Number(id)
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(document);
@@ -296,6 +310,8 @@ router.get('/generate/proposal/pdf/:id', async (request, response) => {
       where: {
         id: Number(id)
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
   
     const formatNumber = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -378,6 +394,8 @@ router.get('/generate/contract/pdf/:id', async (request, response) => {
       where: {
         id: Number(id)
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     const formatNumber = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });

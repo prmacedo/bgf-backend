@@ -18,6 +18,8 @@ router.get('/user/:id', async (req, res) => {
       where: {
         id: Number(id)
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     user.password = undefined;
@@ -38,6 +40,8 @@ router.get('/users/:id', async (req, res) => {
           not: Number(id)
         }
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
     
     const formatedUsers = users.map((user) => {
@@ -78,6 +82,8 @@ router.get('/users/:id/:filter', async (req, res) => {
           }
         ]
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     const formatedUsers = users.map((user) => {
@@ -115,6 +121,8 @@ router.post('/user', async (req, res) => {
         password,
         type
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     user.password = undefined;
@@ -147,6 +155,8 @@ router.patch('/user/:id', async (req, res) => {
         type,
         active
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(user);
@@ -167,6 +177,8 @@ router.patch('/user/password/:id', async (req, res) => {
       data: {
         password
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(user);
@@ -183,6 +195,8 @@ router.delete('/user/:id', async (req, res) => {
       where: {
         id: Number(id)
       }
+    }).finally(async () => {
+      await prisma.$disconnect();
     });
 
     return res.send(user);
