@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contrato</title>
+
+  <style>
+    :root {
+      font-size: 10pt;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .d-flex {display: flex; flex-direction: column;}
+    .row {flex-direction: row;}
+    .justify-content-center {justify-content: center;}
+    .text-center {text-align: center;}
+    .m-0 {margin: 0;}
+    .mt {margin-top: 1rem;}
+    .mt-05 {margin-top: 0.5rem;}
+    .mb-1 {margin-bottom: 1rem;}
+    .my-4 {margin: 4rem 0;}
+    .p-0 {padding: 0;}
+    .pl-1 {padding-left: 1rem;}
+    .g-2 {gap: 2rem;}
+    .w-100 {width: 100%;}
+    .lines {color: transparent; border-bottom: 1px solid black;}    
+
+    body {
+      text-align: justify;
+      margin: 2.5cm 3cm;
+    }
+
+    h1 {
+      font-size: 10pt;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+
+    .underline {
+      text-decoration: underline;
+    }
+
+    .signature {
+      border-bottom: 1px solid black;
+      width: 100%;
+      max-width: 40vw;
+    }
+
+    ol.nested {
+      list-style-type: none;
+      counter-reset: item;
+      margin: 0;
+      padding: 0;
+    }
+
+    ol.nested > li {
+      display: table;
+      counter-increment: item;
+      margin-bottom: 2rem;
+    }
+
+    ol.nested > li:before {
+      font-weight: bold;
+      content: counters(item, ".") ". ";
+      display: table-cell;
+      left: 0;
+
+      width: 5ch;
+    }
+
+    li ol.nested > li {
+      margin: 0;
+      margin-top: 1rem;
+    }
+
+    li ol.nested > li:before {
+      content: counters(item, ".") " ";
+    }
+
+    .nested.main > li {
+      margin-bottom: 0;
+    }
+
+    .nested.main > li > ol{
+      margin-left: -5ch;      
+    }
+       
+    ol.alpha {
+      counter-reset: list;
+      padding-left: 4ch;
+    }
+
+    ol.custom-marker > li {
+      list-style: none;
+      counter-increment: list;
+    }
+
+    ol.custom-marker.parens-after.alpha > li::marker {
+      content: counter(list, lower-latin) ")\9";
+    }
+
+    ol.custom-marker.parens-after.alpha  > li + li {
+      margin-top: 1rem;
+    }
+
+    ol.roman {
+      list-style-type: upper-roman;
+    }
+
+    ol.lower-roman {
+      list-style-type: lower-roman;
+      margin-top: 1rem;
+    }
+
+    ol.lower-roman > li {
+      list-style: none;
+      counter-increment: roman-list;
+      margin-top: 1rem;
+    }
+    
+    ol.lower-roman > li::marker {
+      content: "(" counter(roman-list, lower-roman) ")\9";
+    }
+
+    ol.roman > li {
+      margin-top: 1rem;
+    }
+
+    ol.roman > li::marker {
+      font-weight: bold;      
+    }
+
+    ol.list-none {
+      padding: 0;
+      margin-top: 1rem;
+    }
+
+    ol.list-none > li {
+      list-style: none;
+    }
+
+    table {
+      border-spacing: 0;
+    }
+
+    th {
+      padding: 1rem;
+    }
+    
+    thead {
+      background-color: #ccc;
+    }
+
+    table {
+      border: 1px solid black;
+    }
+
+    th {
+      border-bottom: 1px solid black;
+    }
+
+    th+th, td+td {
+      border-left: 1px solid black;
+    }
+
+
+
+    
+
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>CONTRATO DE PROMESSA DE CESSÃO DE PRECATÓRIO E OUTRAS AVENÇAS</h1>
+    
+    <p>
+      Pelo presente instrumento particular (“<b>Contrato</b>”), e na melhor forma de direito, as Partes adiante designadas e qualificadas, a saber,
+    </p>
+    
+    <p>
+      De um lado,
+    </p>
+    
+    <p>
+      <b><%= Cedente %></b>, <b><%= brasileiro(a) %></b>, <b><%= estado civil %></b>, <b><%= profissão %></b>, inscrito no RG n.º <b><%= xx %></b> e CPF/ME sob o n.º <b><%= xx %></b>, estabelecido no endereço<b><%=  %></b>, doravante designado simplesmente “<b><%= Cedente (1.º nome) %></b>” ou "Promitente Cedente", conforme aplicável; 
+    </p>
+    
+    <p>
+      <b><%= Cessionário %></b>, fundo de investimento em direitos creditórios não-padronizados, nos termos da Resolução do CMN nº 2.907, de 29 de novembro de 2001, da Instrução CVM 356 e da Instrução CVM 444, inscrito no <b>CNPJ/ME sob o nº <%= xx %></b>, doravante designado, simplesmente, “Promitente <b>Cessionário</b>” ou “<b>Fundo</b>”, neste ato, <b>representado por sua instituição administradora <%= xx %></b>, instituição financeira com sede na <b><%= endereço %></b>, na <b>cidade de <%= xx %></b>, <b>Estado de <%= xx %></b>, inscrita no <b>CNPJ/ME sob o nº <%= xx %></b>, devidamente autorizada pela CVM para o exercício profissional de administração de fundos de investimento e gestão de carteiras, representada na forma de seu Estatuto Social ("<b>Administrador</b>"); 
+    </p>
+
+    <p>
+      E, na qualidade de “<b>Interveniente Anuente</b>”:
+    </p>
+
+    <p>
+      <b><%= ASSESSORIA E PLANEJAMENTO EMPRESARIAL LTDA. %></b>, sociedade limitada com sede na Avenida Governador Carlos de Lima Cavalcante, 3995, Loja 07, CEP 53130-555, na cidade de Olinda, Estado de Pernambuco, representado nos termos de seu Contrato Social.
+    </p>
+
+    <p>
+      (Promitente Cedente e Promitente Cessionário adiante denominados em conjunto “<b>Partes”</b> e, individual e indistintamente,
+      “<b>Parte”</b>).
+    </p>
+
+    <p><b>CONSIDERANDO QUE:</b></p>
+    
+    <ol class="custom-marker parens-after alpha">
+      <li>
+        O Promitente Cedente é Coautor da Ação Judicial n.º <b>xx</b>, ajuizada em face do <b><%= Ente Público (União ou Estado x ou Município y)%></b> (“<b>Devedor</b>”), a qual originou o <b>Precatório n.º <%= xx %></b>, emitido em face do Devedor, a qual tramitou perante a <b><%= xx.ª Vara da Fazenda Pública de xx %></b> (“<b>Ação Judicial</b>” e “<b>Precatório</b>”, respectivamente);
+      </li>
+
+      <li>
+        O Promitente Cedente é legítimo titular de fração do Precatório, conforme proporções previstas nos autos processuais deste, bem como possui ciência do atual estágio processual e valor do total do Precatório, o qual, conforme apresentado pelo Núcleo de Precatórios do Estado da Bahia, corresponde ao montante total de <b>R$ <%= xx %> (<%= xx %> – ref. <%= xx %>)</b>, estando ainda de acordo com tais cálculos, ainda que não tenha manifestado tal concordância nos autos do Precatório;
+      </li>
+
+      <li>
+        Da fração do Precatório de titularidade do Promitente Cedente, a fração de <b><%= xx % %> (<%= xx %> por cento)</b> é de propriedade dos respectivos patronos que atuaram nos autos da Ação Judicial e do Precatório, a título de honorários contratuais, conforme previsto no Contrato de Prestação de Serviços Jurídicos datado de <b><%= xx %></b> e respectivos aditamentos (Anexo IV) e não poderá ser objeto de cessão de crédito a terceiros sem a anuência do referido Patrono;
+      </li>
+
+      <li>
+        Promitente Cedente possui o interesse em proceder com a cessão da totalidade de sua correspondente fração do Precatório mencionado no item “a” destes considerandos,  descontada a fração de titularidade dos patronos, nos termos do item “c” destes considerandos ao Promitente Cessionário, e o Promitente Cessionário possui interesse em adquirir a totalidade da correspondente fração do Precatório mencionado no item “a” destes considerandos, descontada a fração de titularidade dos patronos, nos termos do item “c” pertencentes ao Promitente Cedente.
+      </li>
+    </ol>
+
+    <p>
+      Resolvem celebrar o presente “<b>Contrato de Promessa de Cessão de Precatório e Outras Avenças</b>”, que se regerá pelas cláusulas e condições adiante dispostas.
+    </p>
+
+    <ol class="nested main">
+      <li>
+        <b class="underline">Objeto</b>
+        <ol class="nested">
+          <li>
+            <b>Objeto do Contrato.</b> É objeto do presente Contrato a Cessão do Precatório, emitido em face do Devedor e decorrente da Ação Judicial.
+            <ol class="nested">
+              <li>
+                <b>Objeto do Contrato.</b> É objeto do presente Contrato a Cessão do Precatório, emitido em face do Devedor e
+                decorrente da Ação Judicial.
+              </li>
+            </ol>
+          </li>          
+        </ol>
+      </li>
+
+      <li>
+        <b class="underline">Promessa de Cessão</b>
+        <ol class="nested">
+          <li>
+            <b>Promessa de Cessão.</b> O Promitente Cedente, por este ato, de forma irrevogável e irretratável, sem qualquer direito a arrependimento, compromete-se a ceder ao Promitente Cessionário, na data de assinatura da Escritura de Cessão do Precatório (“<b>Data de Fechamento</b>”), a ser lavrada nos termos do <span class="underline">Anexo I</span> deste Contrato (“<b>Escritura de Cessão</b>”) e nos termos deste Contrato, o Precatório, o qual passará a pertencer exclusivamente ao Promitente Cessionário (“<b>Cessão</b>” ou “<b>Cessão do Precatório</b>”, conforme aplicável). 
+            <ol class="nested">
+              <li>
+                <b>Obrigação de Cessão.</b> O Promitente Cedente está obrigado a efetivar a Cessão do Precatório depois de cumprido o disposto na Cláusula 2.2 infra, sob pena de execução específica e supressão da vontade nos termos da lei. 
+              </li>
+            </ol>
+          </li>
+
+          <li>
+            <b>Prazo para a Cessão do Precatório (Fechamento).</b> A Cessão do Precatório deverá ocorrer <b class="underline">em até 30 (trinta) dias úteis</b> da data de assinatura deste Contrato e somente se cumpridos <b class="underline">todos os termos das Condições Precedentes constantes do item 4 infra</b>, por meio da celebração da Escritura de Cessão, a ser lavrada em cartório e assinada pelo Promitente Cessionário e o Promitente Cedente - <b class="underline">este representado pelo Interveniente Anuente conforme instrumento público de procuração que lhe será outorgada nos moldes do Anexo II - na Data de Fechamento.</b>
+          </li>
+
+          <li>
+            <b>Responsabilidade do Promitente Cedente.</b> O Promitente Cedente permanecerá responsável pela existência do Precatório e pela eventual alienação fraudulenta a terceiros, bem como pelo cumprimento de todas as obrigações previstas neste Contrato e na Escritura de Cessão, incluindo, mas sem limitação, suas obrigações de indenizar.
+          </li>
+        </ol>
+      </li>
+
+      <li>
+        <b class="underline">Preço de Aquisição e Forma de Pagamento</b>
+
+        <ol class="nested">
+          <li>
+            <b>Preço de Aquisição.</b> Em contrapartida à Cessão do Precatório, o Promitente Cessionário pagará ao Promitente Cedente valor certo e ajustado, conforme discriminado no item 3.3 do presente Contrato, correspondente a <b><%= xx % (xx por cento) %></b> do valor de face atualizado do Precatório, que corresponde ao valor líquido do Precatório, devidamente atualizado até a presente data, descontados <b>(i)</b> os honorários advocatícios contratuais devidos aos advogados que atuaram na Ação Judicial, conforme previsto no item “c” dos considerandos do presente Contrato; <b>(ii)</b> contribuições previdenciárias (PPS); <b>(iii)</b> imposto de renda (RRA); e <b>(iv)</b> recebimento de parcela preferencial ou parcela preferencial já deferida em juízo, quando aplicável (“<span class="underline">Preço de Aquisição</span>”).
+
+            <ol class="nested">
+              <li>
+                <b>Remunerações Adicionais.</b> Fica acordado entre as Partes que não será devido pelo Promitente Cessionário ao Promitente Cedente qualquer tipo de remuneração adicional ao Preço de Aquisição.
+              </li>
+            </ol>
+          </li>
+
+          <li>
+            <b>Não incidência de acréscimos.</b> Sobre o Preço de Aquisição não incidirão juros de qualquer natureza, correção monetária ou quaisquer outros acréscimos, a qualquer título, desde que o respectivo pagamento ocorra dentro dos prazos definidos no presente Contrato ou, na hipótese de eventual atraso, não tenha sido causado por comprovada ação ou omissão do Promitente Cedente.
+          </li>
+
+          <li>
+            <b>Data e Forma de pagamento do Preço de Aquisição.</b> O valor referente ao Preço de Aquisição (conforme abaixo) será pago ao Promitente Cedente, em até 2 (dois) dias úteis da Data de Fechamento, mediante Transferência Eletrônica Disponível (“<span class="underline">TED</span>”) para conta bancária a ser indicada pelo Promitente Cedente ao Promitente Cessionário nos termos da Cláusula 9 abaixo:
+
+            <div class="d-flex justify-content-center text-center">
+              <br>
+              <b>Preço de Aquisição (valor integral)</b>
+              <br>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>VALOR</th>
+                    <th>BENEFICIÁRIO</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>
+                      <p class="bold"><%= Preço de Aquisição %></p>
+                      <p class="bold"><%= R$ xx %></p>
+                    </td>
+                    <td>
+                      <p class="bold"><%= Cedente %></p>
+                      <p class="bold"><%= CPF/ME nºxx %></p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </li>
+
+          <li>
+            <b>Quitação.</b> O comprovante de realização da TED, conforme o valor delimitado acima e conta bancária a ser indicada pelo Promitente Cedente, valerá como recibo e representará a mais ampla, rasa, geral, irrevogável e irretratável quitação conferida pelo Promitente Cedente, para nada mais reclamar, a qualquer tempo, com relação ao pagamento do Preço de Aquisição.
+          </li>
+
+          <li>
+            <b>Retenção Tributária.</b> As Partes, de comum acordo, tomaram como base de cálculo para o Preço de Aquisição ora pactuado o valor atualizado do Precatório descontado, dentre outros, a incidência da contribuição ao Fundo Financeiro da Previdência Social dos Servidores Públicos do Estado da Bahia (“<span class="underline">FUNPREV</span>”) e do Imposto sobre a Renda de Pessoa Física (“<span class="underline">IRPF</span>”) apenas sobre o valor principal do Precatório, sem considerar os juros, no termos da competente previsão do Supremo Tribula Federal, quando do julgamento do Recurso Extraordinário n. º 855091/RS.
+          </li>
+
+          <li>
+            <b>Critérios de Atualização.</b> As Partes, de comum acordo, tomaram como base os critérios de atualização adotados pelo <b><%= Respectivo Tribunal (TJ/BA, TJ/AL, TRF1 etc.) %></b>, em específico a utilização da Taxa Referencial (TR) desde 30.06.2009 até 25.03.2015, <span class="underline">e o Índice Nacional de Preços ao Consumidor Amplo-Especial (IPCA-E / IBGE) após 25.03.2015 até a presente data.</span> Caso, no momento do recebimento efetivo pelo Promitente Cessionário dos valores decorrentes do Precatório em sua conta corrente, fique evidenciado formalmente e de forma clara que o TJ/BA alterou a referida posição de atualização para utilizar <b class="underline">qualquer outro índice indicado pelo TJ/BA, desde que esse seja superior a TR e/ou ao IPCA-E nos respectivos períodos de incidência,</b> o Promitente Cessionário se compromete a pagar ao Promitente Cedente o mesmo percentual definido no Preço de Aquisição acima, calculado sobre a diferença decorrente do valor considerado para a presente Cessão e o valor adicional da utilização do <b class="underline">de outro índice que eventualmente venha a ser indicado pelo TJ/BA</b>, como índice de atualização no período em questão.
+          </li>
+        </ol>
+      </li>
+
+      <li>
+        <b class="underline">Condições Precedentes</b>
+        <ol class="nested">
+          <li>
+            A Cessão do Precatório e o pagamento de quaisquer contraprestações pelo Promitente Cessionário nos termos da Cláusula 3 acima estão condicionadas à conclusão satisfatória confirmada pelo Promitente Cessionário (ou renúncia pelo Promitente Cessionário) das seguintes condições precedentes, estabelecidas em exclusivo critério do Promitente Cessionário (“<b>Condição Precedente</b>”):
+            <ol class="nested">
+              <li>
+                Análise satisfatória pelo Promitente Cessionário do Promitente Cedente e do Precatório, incluindo, mas não se limitando, a eventuais riscos de crédito, liquidez e fraude contra credores;
+              </li>
+              <li>
+                Apresentação de Declaração a ser assinada pelo Patrono do Promitente Cedente, nos termos do <span class="underline">Anexo III</span>, declarando possuir ciência dos termos e condições da Cessão objeto do presente Contrato, no estágio em que se encontra o Precatório e, ainda, não se opondo de nenhuma forma;
+              </li>
+              <li>
+                outorga pelo Promitente Cedente para o Interveniente Anuente do Instrumento Público de Procuração conforme modelo constante do <span class="underline">Anexo II</span>. 
+              </li>
+            </ol>
+
+            <li>
+              Assim que as Condições Precedentes tiverem sido cumpridas e desde que estas ocorram antes do prazo definido no item 2.2. acima, o Promitente Cessionário irá informar ao interveniente Anuente a data e local para assinatura da Escritura Pública de Cessão do Precatório.  
+            </li>
+            
+            <li>
+              Caso as Condições Precedentes não sejam cumpridas dentro do prazo estipulado no item 2.2. acima, o presente Contrato será considerado rescindido de pleno direito, sem qualquer responsabilidade para o Promitente Cessionário e o Interveniente Anuente 
+            </li>
+          </li>
+        </ol>
+      </li>
+      
+      <li>
+        <b class="underline">Providências Adicionais</b>
+        <ol class="nested">
+          <li>
+            <b>Providências adicionais.</b> Sem prejuízo do disposto acima, o Promitente Cedente obriga-se e compromete-se a firmar quaisquer documentos adicionais, bem como a adotar quaisquer outras providências que venham a ser requeridos ou que, na exclusiva opinião do Promitente Cessionário sejam consideradas úteis ou necessárias para o recebimento dos valores relativos ao Precatório, para consumar a Cessão do Precatório ou para perseguir ou exigir o cumprimento de qualquer um de seus direitos em relação ao Precatório ou a este Contrato.
+          </li>
+        </ol>
+      </li>
+
+      <li>
+        <b class="underline">Cobrança do Precatório</b>
+        
+        <ol class="nested">
+          <li>
+          <b>Cobrança e outras providências.</b> A partir Data de Fechamento, o Promitente Cessionário passará exclusivamente a promover a cobrança do Precatório e passará a ser o único legitimado a (i) adotar quaisquer medidas em relação ao Precatório, obrigando-se o Promitente Cedente a abster-se de fazê-lo, salvo se requerido antecipadamente, por escrito, pelo Promitente Cessionário; (ii) requerer judicialmente a inclusão do nome do Promitente Cessionário como titular do Precatório, conforme aplicável e caso seja necessário; e (iii) receber os valores a serem depositados pela Devedora, a título de pagamento do Precatório, sendo que os recursos pertinentes ao Precatório serão considerados de exclusiva titularidade do Promitente Cessionário. 
+        </li>
+        
+        <li>
+          <b>Outras restrições.</b> O Promitente Cedente, a qualquer tempo após a presente data, não poderá negociar acordo ou pagamento, receber diretamente da Devedora ou fazer o levantamento de qualquer valor eventualmente depositado em juízo ou fora dele pela Devedora, relativo ao Precatório, salvo por expressa determinação por escrito o Promitente Cessionário. 
+        </li>
+        
+        <li>
+          <b>Recebimento de valores pelo Promitente Cedente.</b> Na hipótese do Promitente Cedente, por qualquer motivo, após a Data de Fechamento, receber diretamente ou levantar quaisquer montantes depositados pela Devedora e relativo ao Precatório, (i) será considerado como fiel depositário de tais montantes, ficando os referidos valores vinculados às obrigações legais advindas de tal condição e (ii) ficará obrigado, de forma irrevogável e irretratável a, no prazo máximo de até 02 (dois) dias úteis, contados do recebimento ou levantamento de qualquer valor relativo ao Precatório, transferir ao Promitente Cessionário exatamente os mesmos valores depositados ou levantados indevidamente pelo Cedente, sem que haja qualquer dedução ou desconto, a qualquer título. 
+        </li>
+        </ol>
+      </li>
+
+      <li>
+        <b class="underline">Declarações das Partes</b>
+
+        <ol class="nested">
+          <li>
+            <b>Declarações do Promitente Cedente.</b> O Promitente Cedente, presta, as seguintes declarações e garantias ao Promitente Cessionário, as quais garante serem verdadeiras, precisas, corretas e completas na Data de Assinatura e que continuarão sendo verdadeiras, precisas, corretas e completas na Data de Fechamento, como se tais declarações e garantias tivessem sido prestadas na Data de Fechamento:
+
+            <ol class=" roman">
+              <li>Possui poderes para assumir e cumprir as obrigações nele estabelecidas;</li>
+              <li>Todos os documentos e informações disponibilizados ao Promitente Cessionário antes da celebração deste Contrato refletem corretamente, em todos os aspectos relevantes para fins de aquisição do Precatório, a situação jurídica, econômica, financeira e patrimonial do Promitente Cedente, situação essa que não deverá ter sofrido, desde a data-base das informações financeiras e das respectivas datas de entrega das demais informações, qualquer alteração significativa que afete ou possa afetar, de maneira adversa, sua solvência, o presente Contrato ou a Cessão do Precatório;</li>
+              <li>Este Contrato constitui obrigação válida, eficaz e exigível, de acordo com seus termos, reconhecendo o Promitente Cedente que a cessão objeto deste Contrato atribui ao Promitente Cessionário o direito de exigir, nos termos do art. 463 do Código Civil, a efetivação da Cessão do Precatório por ele detido e que essa atribuição impõe ao Promitente Cedente a obrigação de efetivar a Cessão do Precatório;</li>
+              <li>O Precatório é de legítima e exclusiva titularidade do Promitente Cedente, que será seu único beneficiário, estando livre e desembaraçado de quaisquer ônus, gravames, arrestos, sequestro, penhores, penhoras ou restrições de qualquer natureza, e de quaisquer outras circunstâncias que obstem a Cessão do Precatório ou afete sua validade e eficácia ou obstem ou impeçam o pleno exercício, pelo Promitente Cessionário, de todos os direitos, ações, privilégios e garantias relacionados ao Precatório ou futuramente o recebimento dos valores relativos ao Precatório pelo Promitente Cessionário;</li>
+              <li>Não foi celebrado com terceiros qualquer acordo ou contrato de qualquer natureza que tenha por objeto a cessão, outorga em garantia ou qualquer outra forma de comprometimento dos respectivo Precatório, parcial ou integralmente, ou mesmo qualquer acordo ou obrigação de confidencialidade versando sobre o Precatório, ou qualquer acordo ou contrato que possa, de alguma forma, prejudicar ou impedir a realização da Cessão do Precatório ou o exercício pelo Promitente Cessionário de quaisquer direitos oriundos do presente Contrato, ou de quaisquer direitos, ações, privilégios e garantias relacionados ao Precatório ou, ainda, futuramente, o recebimento dos valores relativos ao Precatório pelo Promitente Cessionário;</li>
+              <li>Não se encontra insolvente, em vias de se tornar insolvente ou está inadimplente, em vias de se tornar inadimplente em quaisquer contratos ou acordos ou obrigações de qualquer natureza, incluindo obrigações legais, bem como não se tornarão insolventes ou inadimplentes após e/ou em decorrência da assinatura deste Contrato, após a assunção das obrigações aqui contempladas ou após a efetivação da Cessão do Precatório, de forma a comprometer o Precatório e a cessão deste aqui firmada;</li>
+              <li>Não existem títulos protestados em seu nome que possam comprometer a Cessão do Precatório;</li>
+              <li>Não são parte de, nem se encontram na iminência de se tornarem, nem foram condenados em qualquer ação, execução, processo arbitral ou qualquer outra demanda de natureza civil, trabalhista, tributária, previdenciária ou de qualquer outra natureza, incluindo processos administrativos ou judiciais envolvendo qualquer lei ou regulamento relacionados a práticas de corrupção ou atos lesivos à administração pública, incluindo, sem limitação, as Leis nº 9.613/98, nº 12.846/13 e Decreto nº 8.420/15, conforme aplicáveis (em conjunto, a “<span class="underline">Legislação Anticorrupção</span>”) (a) que possa vir a reduzi-los à insolvência; (b) que possa, de qualquer forma, afetar a validade ou a eficácia da Cessão do Precatório ou de qualquer das disposições deste Contrato ou, ainda, a qualidade e/ou o valor do Precatório; e (c) do qual possa resultar a imposição de qualquer ônus ou gravame sobre o Precatório;</li>
+              <li>Com exceção da Ação Judicial, não existem atualmente ações, processos ou demandas judiciais, arbitrais ou administrativas, de qualquer natureza, que estejam de qualquer forma relacionadas ao Precatório, que versem sobre sua existência, valor, validade, exigibilidade ou outro tema; tampouco existem ou existiram negociações ou tentativas de negociação para celebração de acordo ou qualquer forma de transação relacionada ao Precatório que afetem ou impeçam a celebração deste Contrato;</li>
+              <li>Nos termos da legislação em vigor, a efetivação da Cessão do Precatório e a celebração do Contrato não serão, sob hipótese alguma, consideradas hipótese de fraude contra credores ou fraude à execução, conforme previsto nos artigos 158 a 165 do Código Civil, 792 do Código de Processo Civil (Lei Federal nº 13.105, de 16 de março de 2015) e 185 do Código Tributário Nacional (Lei Federal nº 5.172, de 25 de outubro de 1966) e demais normas aplicáveis, declarando o Promitente Cedente (a) que a celebração da presente Contrato não é realizada com a intenção de, nem terá por efeito causar qualquer, fraude contra credores ou fraude à execução ou qualquer prejuízo a seus credores ou às garantias a eles atribuídas e (b) que o Promitente Cedente possui em seu patrimônio bens e direitos em valor suficiente para satisfazer todas as suas obrigações, passivos e contingências, de qualquer natureza;</li>
+              <li>A efetivação da Cessão do Precatório e a celebração do presente Contrato não está sujeita à revogação, nos termos dos artigos 129 a 138 da Lei n.º 11.101, de 09 de fevereiro de 2005, ou de qualquer outra norma aplicável;</li>
+              <li>Não omitiu qualquer documento ou informação de que tenha conhecimento e que poderia impactar materialmente o interesse do Promitente Cessionário em adquirir o Precatório ou sua decisão de celebrar o presente Contrato;</li>
+              <li>O Precatório é legítimo e oriundo de atos/fatos lícitos e regularmente realizados, sendo que a Ação Judicial foi e está sendo diligente e tempestivamente conduzida, não tendo havido qualquer espécie de suborno, concussão, prevaricação, desvio de conduta, deturpação, falsificação ou falsidade de documentos ou testemunho, ato vedado pela Legislação Anticorrupção, falsa ou equivocada perícia para facilitação ou, de qualquer forma, favorecimento do Promitente Cedente;</li>
+              <li>O Precatório representa crédito validamente exigível em face da Devedora;</li>
+            </ol>
+
+            <li>
+              <b>Vigência das Declarações.</b>
+              presente data pelo Promitente Cedente nos termos da Cláusula 7.1 deverão ser e permanecer válidas, corretas, completas e verdadeiras durante toda a vigência do disposto neste Contrato, bem como da Escritura de Cessão. 
+            </li>
+
+            <li>
+              <b>Não mitigação.</b>
+              Eventuais análises realizadas pelo Promitente Cessionário, e/ou por qualquer de suas partes relacionadas que (a) o controle, (b) seja por ele controlado, (c) esteja sobre controle comum, (d) seja com ele coligada e/ou (e) seja seu respectivo gestor e/ou administrador (“<span class="underline">Partes Relacionadas</span>”), anteriormente à data de celebração deste Contrato não afetam ou mitigam, em qualquer medida, a responsabilidade do Promitente Cedente pelas declarações prestadas ou a serem prestadas.
+            </li>
+          </li>
+        </ol>
+      </li>
+
+      <li>
+        <b class="underline">Multas, Indenizações e Reembolso</b>
+
+        <ol class="nested">
+          <li>
+            <b>Mora e inadimplemento.</b>
+            Salvo previsão em sentido contrário neste Contrato, hipótese na qual prevalecerá a penalidade específica, o inadimplemento absoluto ou a mora de qualquer das Partes no cumprimento das obrigações assumidas nesta oportunidade não autorizará sua resolução, mas apenas a aplicação das penalidades previstas nas Cláusulas 8.2 a 8.4.2. do presente Contrato.
+          </li>
+
+          <li>
+            <b>Obrigações pecuniárias.</b>
+            Em caso de descumprimento de quaisquer das obrigações pecuniárias previstas neste Contrato, além de permanecer obrigada a cumprir a obrigação principal descumprida, a Parte infratora incorrerá em multa compensatória no valor equivalente a 2% (dois por cento) do total devido, que compreenderá o valor da obrigação em questão (“<span class="underline">Multa Compensatória</span>”). A Multa Compensatória e o valor devido nos termos da obrigação principal descumprida serão atualizados com base na variação da taxa IPCA ou, na sua falta, o índice que vier a substituí-la, calculado, em qualquer caso, pro rata temporis desde a data de vencimento da obrigação até a data de seu efetivo adimplemento, mais juros de mora de 1% (um por cento) ao mês
+          </li>
+
+          <li>
+            <b>Obrigações não pecuniárias.</b>
+            O inadimplemento, por qualquer das Partes, de quaisquer das obrigações de dar, fazer ou não fazer assumidas nos termos deste Contrato, sujeitará a Parte infratora à execução específica, bem como à obrigação de indenizar a Parte inocente pelas perdas e danos diretos. 
+          </li>
+
+          <li>
+            <b>Obrigação do Promitente Cedente.</b>
+            O Promitente Cedente obriga-se, em caráter irrevogável e irretratável, a indenizar e a manter isentos de responsabilidade o Interveniente Anuente, o Promitente Cessionário, seu Administrador, seu gestor e/ou seu custodiante, bem como quaisquer empresas de seu Grupo Econômico (conjuntamente, “<span class="underline">Partes Indenizáveis</span>”) por todos e quaisquer prejuízos sofridos (genericamente, “<span class="underline">Perdas</span>”), incluindo despesas com honorários advocatícios e quaisquer outros custos incorridos por qualquer das Partes Indenizáveis na defesa de seus direitos, em razão de ato, fato ou evento que seja potencialmente atribuível, ou ao menos imputado, por terceiro ao Promitente Cedente relacionado ao Precatório, à Ação Judicial ou ao Contrato e/ou Escritura de Cessão. 
+          </li>
+
+          <li>
+            <b>Reembolso.</b>
+            Caso (i) a presente Cessão seja, por qualquer razão, anulada ou considerada nula, ainda que especificamente ao Cedente, nos termos de decisão judicial ou arbitral (ainda que sujeita a recurso ou emitida de forma liminar), ou (ii) seja ajuizada por terceiro ou Autoridade Pública ação judicial ou arbitral que discuta potencial (a) atos ilegais praticados pelo Promitente Cedente ou seus Procuradores no âmbito da Ação Judicial e/ou do Precatório, (b) cessão a terceiro do Precatório ou dos direitos creditórios oriundos da Ação Judicial anterior à presente Cessão, (c) constatação da inveracidade de qualquer das declarações prestadas pelo Promitente Cedente neste Contrato, (d) ônus ou encargos sobre parte ou integralidade do Precatório, o Promitente Cedente deverá restituir ao Promitente
+            Cessionário todos os valores que lhe foram individualmente pagos (“<span class="underline">Reembolso</span>”).
+
+            <ol class="nested">
+              <li>O  Reembolso será atualizado pela inflação acumulada desde a presente data até a data do efetivo Reembolso com base na variação do IPCA, acrescido de multa de 15% (quinze por cento) e juros moratórios de 1% (um por cento) ao mês, calculados pro rata die, devendo este ocorrer em até 5 (cinco) dias úteis contados da entrega de comunicação por escrito pelo Promitente Cessionário ao Promitente Cedente (“<span class="underline">Comunicação de Reembolso</span>”). </li>
+            </ol>
+          </li>
+        </ol>
+      </li>
+
+      <li>
+        <b class="underline">Comunicações</b>
+
+        <ol class="nested">
+          <li>
+            <b>Comunicações.</b>
+            Todas as notificações, avisos ou comunicações, relativos ao presente Contrato, serão realizados por escrito e considerados recebidos na data de sua entrega, se entregues pessoalmente, na data de seu efetivo recebimento, se enviadas por via postal ou por correio eletrônico com aviso de recebimento. As referidas notificações, avisos e comunicações serão enviadas para os endereços eletrônicos abaixo indicados ou para qualquer outro endereço que vier a ser informado por uma Parte à outra, através de comunicação escrita:
+
+            <ol class="lower-roman">
+              <li>para o <b>Promitente Cessionário:</b>
+                <ol class="list-none">
+                  <li><%= Cessionário %></li>
+                  <li><%= Endereço %></li>
+                  <li><%= CEP - Cidade - Estado %></li>
+                  <li><%= Telefone: (xx) xxxx-xxxx %></li>
+                  <li><%= Email: xx %></li>                  
+                </ol>
+              </li>
+
+              <li>para o <b>Promitente Cedente:</b>
+                <ol class="list-none">
+                  <li><%= Cessionário %></li>
+                  <li><%= Endereço %></li>
+                  <li><%= CEP - Cidade - Estado %></li>
+                  <li><%= Telefone: (xx) xxxx-xxxx %></li>
+                  <li><%= Email: xx %></li>                  
+                </ol>
+              </li>
+            </ol>
+          </li>
+
+          <li>
+            <b>Alterações.</b>
+            Caso ocorram alterações nos endereços e demais dados de contato acima indicados, as Partes obrigam-se a comunicá-las prontamente à outra Parte. A alteração de dados de contato terá efeitos, para fins deste Contrato, a partir do Dia Útil seguinte à data em que recebida pela Parte destinatária uma notificação nesse sentido.
+          </li>
+        </ol>
+      </li>
+
+      <li>
+        <b class="underline">Disposições Gerais.</b>
+        <ol class="nested">
+          <li>
+            <b>Vigência.</b> O presente Contrato entra em vigor na Data de Assinatura, assim permanecendo até o momento em que os valores do Precatório tenham sido recebidos de forma integral e inquestionável pelo Promitente Cessionário, bem como o Promitente Cessionário tenha pago todos os valores devidos ao Promitente Cedente, e que nenhuma pessoa tenha o direito de questionar ou disputar o recebimento dos mesmos pelo Promitente Cessionário ou pelo Promitente Cedente, observadas as hipóteses de resolução aqui previstas. 
+
+            <ol class="nested">
+              <li>
+                Uma vez extinto o Contrato, todos os direitos e obrigações das Partes serão também resolvidos, com exceção das obrigações de Multas, Indenizações e Reembolso (Cláusula 7), Comunicações (Cláusula 9) e Foro Judicial (Cláusula 10.14), as quais permanecerão válidas e vigentes por um prazo de 5 (cinco) anos contados da extinção do Contrato. Adicionalmente, no caso de decisão de improcedência com trânsito em julgado da Ação Judicial, o presente Contrato permanecerá em vigor até que todas as obrigações nele dispostas tenham sido cumpridas pelas Partes respectivas.
+              </li>
+            </ol>
+          </li>
+
+          <li>
+            <b>Resilição.</b>
+            Caso a Escritura de Cessão não seja celebrada no prazo estipulado no item 2.2. acima (em até 30 dias úteis da assinatura do presente Contrato), o Contrato será considerado resilido de pleno direito.
+          </li>
+
+          <li>
+            <b>Assistência</b>
+            As Partes e a Interveniente Anuente declaram que foram devidamente assistidas na celebração do presente Contrato, que os alertaram sobre os riscos envolvidos no negócio objeto deste Contrato, bem como que estão assinando este Contrato de forma independente, por livre e espontânea vontade, ciente dos riscos e obrigações a que estão sujeitas, e dos direitos atribuídos neste Contrato. Assim, nenhuma das Partes poderá, a qualquer tempo, após a Data de Assinatura, alegar ignorância, erro, lesão, desconhecimento ou qualquer outro vício com relação aos riscos, obrigações e direitos previstos neste Contrato.
+          </li>
+
+          <li>
+            <b>Acordo integral.</b>
+            O presente Contrato constitui o acordo integral entre as Partes em relação às matérias que constituem seu objeto, substituindo eventuais documentos anteriormente firmados e entendimentos anteriormente havidos entre as Partes e minutas deste Contrato devem ser desconsideradas.
+          </li>
+
+          <li>
+            <b>Alterações.</b>
+            As alterações ao presente instrumento somente serão válidas quando celebradas por escrito e assinadas pelos representantes legais de todas as Partes.
+          </li>
+
+          <li>
+            <b>Irrevogabilidade e Irretratabilidade; Sucessão.</b>
+            Este Contrato, os compromissos e as responsabilidades nele assumidas pelas Partes são irrevogáveis e irretratáveis. Este Contrato é vinculante e é celebrado em benefício das Partes e de seus respectivos sucessores e cessionários autorizados que possam se tornar Partes.
+          </li>
+
+          <li>
+            <b>Cessão pelo Promitente Cedente.</b>
+            Os direitos e obrigações decorrentes do presente Contrato não poderão ser cedidos pelo Promitente Cedente, total ou parcialmente, a qualquer título. 
+          </li>
+
+          <li>
+            <b>Cessão pelo Promitente Cessionário.</b>
+            Os direitos e obrigações decorrentes do presente Contrato poderão ser cedidos pelo Promitente Cessionário, total ou parcialmente, a qualquer título. 
+          </li>
+
+          <li>
+            <b>Execução Específica.</b>
+            Este Contrato será regido e interpretado pelas leis brasileiras, especialmente os artigos 497, 501 e 815 do Código de Processo Civil comportando execução específica das obrigações de fazer e não fazer aqui previstas. Para fins e efeitos legais, este Contrato, assinado por duas testemunhas, constitui-se em título executivo extrajudicial, cobrável através de processo de execução nos termos do artigo 784, III, do Código de Processo Civil.
+          </li>
+
+          <li>
+            <b>Renúncia, Novação e Outros.</b>
+            As Partes declaram e reconhecem que, exceto se expressamente previsto neste Contrato, (i) o não exercício, a concessão de prazo, a tolerância, ou o atraso no exercício de qualquer direito que lhes seja assegurado por este Contrato ou por lei não constituirá renúncia ou novação desses direitos, nem prejudicará o seu eventual exercício; (ii) o exercício singular ou parcial desses direitos não impedirá o posterior exercício do restante desses direitos ou o exercício de qualquer outro direito; (iii) a renúncia a qualquer desses direitos somente será válida se formalizada por escrito; (iv) a renúncia a um direito deverá ser interpretada restritivamente e não será considerada como renúncia a qualquer outro direito conferido por este Contrato; (v) a nulidade ou invalidade de qualquer das cláusulas deste instrumento não prejudicará a validade e eficácia de suas demais cláusulas e do próprio Contrato, e (vi) os direitos de cada Parte previstos neste Contrato são cumulativos com outros direitos previstos em lei, a menos que este Contrato expressamente os exclua.
+          </li>
+
+          <li>
+            <b>Tributos.</b>
+            Exceto se de forma diversa prevista neste Contrato, todos os impostos decorrentes das operações de que trata este Contrato serão suportados exclusivamente por seu respectivo contribuinte.
+          </li>
+
+          <li>
+            <b>Anticorrupção.</b>
+            Nenhuma das Partes poderá oferecer, dar ou se comprometer a dar a quem quer que seja, ou aceitar ou se comprometer a aceitar de quem quer que seja, tanto por conta própria quanto através de outrem, qualquer pagamento, doação, compensação, vantagens financeiras ou não financeiras ou benefícios de qualquer espécie que violem qualquer Legislação Anticorrupção ou constituam prática ilegal ou de corrupção sob as leis de qualquer país, seja de forma direta ou indireta quanto ao objeto deste Contrato ou à Ação Judicial, ou de outra forma que não relacionada a este Contrato, devendo garantir, ainda, que seus prepostos e colaboradores ajam da mesma forma.
+          </li>
+
+          <li>
+            <b>Foro Judicial.</b>
+            Fica eleito o Foro da Comarca de São Paulo como competente para resolver qualquer controvérsia oriunda deste Contrato ou com ele relacionada.
+          </li>
+
+          <p>E, por estarem justas e acordadas, as Partes firmam este Contrato em 2 (duas) vias de igual forma e teor, na presença das 2 (duas) testemunhas abaixo indicadas. </p>
+        </ol>
+      </li>
+    </ol>
+
+    <div>
+      <p class="text-center m-0 mb-1">
+        <%= Local, data %>
+      </p>
+
+      <div class="my-4">
+        <div class="signature mb-1"></div>
+        <%= Cedente %>
+      </div>
+
+      <span>e na qualidade de Interveniente Anuente</span>
+
+      <div class="my-4">
+        <div class="signature mb-1"></div>
+        <%= BRV/BGF %>
+      </div>
+
+      <div>
+        <div class="signature mb-1"></div>
+        <%= Fundo %>
+      </div>
+
+      <p>Neste ato representado por seu Administrador</p>
+
+      <span class="underline">Testemunhas:</span>
+
+      <div>
+        <ol class="d-flex row p-0 pl-1 g-2">
+          <div class="w-100">
+            <li class="signature"></li>
+            <p class="mt-05">Nome:</p>
+            <p class="mt-05">CPF:</p>
+          </div>
+
+          <div class="w-100">
+            <li class="signature"></li>
+            <p class="mt-05">Nome:</p>
+            <p class="mt-05">CPF:</p>
+          </div>
+        </ol>
+      </div>
+    </div>
+
+    <p style="page-break-after: always;"></p>
+    <p style="page-break-before: always;"></p>
+
+    <section>
+      <p class="text-center underline">
+        <b>Anexo I ao Contrato de Promessa de Cessão</b>
+      </p>
+
+      <p class="text-center">
+        <b>Minuta de Escritura Pública de Cessão de Precatório</b>
+      </p>
+
+      <p>
+        Aos [•] dias do mês de [•] do ano de [●], nesta cidade do Estado de [●], em o prédio nº [●], da [●], perante mim escrevente, compareceram as partes entre si, justas e contratadas, a saber: OUTORGANTE: <%= Cedente %>, <%= brasileiro(a) %>, <%= estado civil %>, <%= profissão %>, inscrito no RG n.º <%= xx %> e CPF/ME sob o n.º <%= xx %>, estabelecido no <%= endereço %>, os quais ficam arquivados nestas notas na pasta <span class="lines">____</span>, sob nº <span class="lines">____</span>, representados por seu procurador: BRV ASSESSORIA E PLANEJAMENTO EMPRESARIAL LTDA., sociedade limitada com sede na Avenida Governador Carlos de Lima Cavalcante, 3995, Loja 07, CEP 53130-555, na cidade de Olinda, Estado de Pernambuco, com seu Contrato Social arquivado na JUCEPE em 06/02/2020, com o NIRE nº 26202542230 (“Intermediário”), os quais ficam arquivados nestas notas na pasta <span class="lines">____</span>, nos termos da procuração lavrada em [•] de [•] de 2020, no [•]º Tabelião de Notas de [•], Estado da [•], livro [•] – P, folha [•], ato [•], cuja a cópia fica arquivada nestas notas na pasta <span class="lines">________</span>, sob nº <span class="lines">________</span>, a seguir denominados “<b>Cedente</b>” e, individualmente, “<b>Cedente</b>”; e ainda, como <b>OUTORGADO CESSIONÁRIO: <%= Cessionário %></b>, fundo de investimento em direitos creditórios não-padronizados, nos termos da Resolução do CMN nº 2.907, de 29 de novembro de 2001, da Instrução CVM 356 e da Instrução CVM 444, inscrito no <b><%= CNPJ/ME sob o nº xx %></b>, doravante designado, simplesmente, “<b>Promitente Cessionário</b>” ou “<b>Fundo</b>”, neste ato, <b>representado por sua instituição administradora <%= xx %></b>, instituição financeira com sede na <b><%= endereço %></b>, na <b>cidade de <%= xx %></b>, <b>Estado de <%= xx %></b>, inscrita no <b>CNPJ/ME sob o nº <%= xx %></b>, com seu estatuto social consolidado e aprovado pelas Assembleias Geral Ordinária e Extraordinária, realizadas em [•] de [•] de 20[•], cuja ata está registrada na Junta Comercial do Estado de <b><%= xx %></b>, sob nº [•] nos quais ficam arquivados nestas notas na pasta [•], sob número [•], representado nos termos do <b>artigo [•], parágrafo [•]º</b> de referido estatuto social arquivado nestas notas na pasta nº <span class="lines">___</span>, sob o nº <span class="lines">____</span> por [●], doravante designado, simplesmente, “<b>Cessionário</b>” e, em conjunto com os Cedente, “<b>Partes</b>”. Os presentes conhecidos entre si e reconhecidos como os próprios por mim escrevente, em razão dos documentos apresentados e aqui mencionados, do que dou fé. E pelas PARTES me foi dito que tem entre si justo e acertado o seguinte: <b>CONSIDERANDO QUE: (i)</b> o Cedente é legítimo e exclusivo titular de 100% do crédito objeto do presente Escritura de Cessão, oriundo do <b>Precatório emitido sob n° <%= xx %></b>, decorrente da <b>Ação Judicial n.º <%= xx %></b>, tramitados ou atualmente em trâmite perante a <b><%= xx %>.ª Vara da Fazenda Pública de <%= xx %></b>, bem como, de forma geral, de ações, incidentes e/ou recursos conexos a referidos processos, em qualquer instância, relativamente a tal ação judicial (“<b>Precatório</b>” e “<b>Ação Judicial</b>”, respectivamente), em que figura como parte contrária o <b>Estado da <%= xx %></b> (“<b>Devedor</b>”); <b>(ii)</b> conforme cálculo consensual das partes, o Precatório é estimado, em <b><%= xx %></b>, em R$ <b><%= xx %></b> (<b><%= xx %></b>); e, ainda, conforme acordado entre as partes, a totalidade do valor e seus acessórios serão cedidos pelo Cedente; <b>(iii)</b> o Cedente e o Cessionário celebraram o Contrato de Promessa de Cessão de Precatório e Outras Avenças (“<b>Contrato</b>”) no dia [•] ([•]) de [•] de <b><%= xx %></b> ([•]), por meio do qual o Cedente se comprometeu a vender, ceder e transferir ao Cessionário a totalidade que lhe cabe do Precatório nos termos e condições ali pactuados, e que o Cessionário, conforme lhe era facultado no Contrato, decidiu adquirir referido Precatório; e <b>(iv)</b> as partes, plenamente capazes e devidamente orientadas por assessores jurídicos, dispuseram de tempo e condições adequadas para a avaliação e discussão de todas as cláusulas desta Escritura, cuja celebração, execução e extinção são pautadas pelos princípios da igualdade, probidade, lealdade e boa-fé. Foi-me dito pelas partes Fundos o seguinte: <b>1)</b> Conforme prévia e devidamente ajustado e convencionado no Contrato, em contrapartida ao pagamento do Preço de Aquisição ali definido e acordado, de forma irretratável e irrevogável, sem qualquer direito a arrependimento, o Cedente cede neste ato ao Cessionário a totalidade da parte que lhe cabe do Precatório, inclusive reajustes monetários, multas, juros e encargos, bem como quaisquer direitos, garantias, privilégios, preferências, prerrogativas e ações originalmente asseguradas ao Cedente, bem como todos os riscos, responsabilidades e resultados do Precatório, nos termos dos artigos 286 e seguintes, 458 e seguintes do Código Civil Brasileiro e demais normas aplicáveis. <b>2)</b> O Cedente declara ter recebido, nesta data, 100% (cem por cento) do Preço de Aquisição nos termos do Contrato e, por conseguinte, dão ao Cessionário, neste ato, a mais ampla, rasa, geral, irrevogável e irretratável quitação, para nada mais reclamar, a qualquer tempo, com relação ao pagamento do Preço de Aquisição e Cessão do Precatório. <b>3)</b> O Cessionário, a seu exclusivo critério, tem legitimidade e poderes para, nos termos do Contrato, defender e buscar a cobrança, bem como tomar todas e quaisquer medidas necessárias ao recebimento do Precatório. <b>4)</b> O Cedente, no âmbito do Precatório e da Ação Judicial, obriga-se a colaborar em todos e quaisquer atos que se fizerem necessários, a critério do Cessionário, para aperfeiçoamento da cessão do Precatório ao Cessionário, tais como assinar documentos e/ou petições, prestar declarações, outorgar procuração, comparecer perante o juízo, tribunal ou qualquer autoridade judiciária com competência em relação ao Precatório ou à Ação Judicial, por meio de seus representantes legais, visando a efetiva homologação da Cessão do Precatório ao Cessionário nos termos da presente Escritura e a obter a inclusão do nome do Cessionário como titular do Precatório, o recebimento de qualquer valor relativo ao Precatório diretamente pelo Cessionário, bem como emissão de guia, alvará de levantamento de depósito ou qualquer outro instrumento em favor do Cessionário. <b>5)</b> Na hipótese de emissão de guia de pagamento, alvará de levantamento de depósito ou qualquer outro instrumento ou autorização aplicável em benefício do Cedente (inclusive em virtude de insucesso do Cessionário na obtenção da guia de pagamento), e/ou caso o Cedente, direta ou indiretamente, receba indevidamente qualquer valor decorrente do Precatório, o Cedente deverá restituir, transferir ou pagar ao Cessionário, no prazo máximo de 2 (dois) Dias Úteis contados do recebimento ou levantamento do Precatório, exatamente os valores recebidos ou levantados indevidamente, sem que haja qualquer dedução ou desconto, a qualquer título, exceto por qualquer despesa bancária que vier a ser cobrada em relação a tal montante sem culpa do Cedente. <b>6)</b> o Cedente e o Cessionário obrigam-se, a critério do Cessionário, a levar a registro a presente Escritura junto aos competentes Cartórios de Registro de Títulos e Documentos com jurisdição sobre a sede do Cessionário e/ou do Cedente, devendo o Cessionário arcar, isoladamente, com os custos incorridos com tais registros. <b>7)</b> O Cedente reitera, por meio da assinatura da presente Escritura, a veracidade, validade e eficácia da totalidade das declarações e documentos disponibilizados no Contrato, em especial as declarações dadas nas cláusulas 6.1 do Contrato. <b>8)</b> A Promessa de Cessão do Precatório prevalece, sob qualquer hipótese, sobre a presente Escritura em caso de divergência, razão por que esta não altera, substitui ou cancela as disposições do Contrato de Promessa de Cessão de Precatório. <b>9)</b> Os termos e expressões em letras maiúsculas que não possuem sua definição nesta Escritura terão a definição estabelecida no Contrato. 10) Fica eleito o Foro da Comarca de São Paulo como competente para resolver qualquer controvérsia oriunda desta Escritura de Cessão ou com ela relacionada. As partes declaram, finalmente, que aceitam a presente escritura nos seus expressos termos, por se achar conforme o que haviam convencionado. - De como assim disseram, do que dou fé, me pediram e lhes lavrei esta escritura, a qual feita e lhes sendo lida em voz alta e clara, foi achada em tudo conforme, aceitam e assinam, dou fé. - Emolumentos: R$[●]; Estado: R$[●]; IPESP: R$[●]; Registro Civil: R$[●]; Tribunal de Justiça: R$[●]; Santa Casa: R$[●]; Imposto ao Município: R$[●]; Ministério Público: R$[●]; Total: R$[●]. Guia nº [●]/2021.
+      </p>
+    </section>
+
+    <p style="page-break-after: always;"></p>
+    <p style="page-break-before: always;"></p>
+
+    <section>
+      <p class="text-center underline">
+        <b>Anexo II ao Contrato de Promessa de Cessão</b>
+      </p>
+
+      <p class="text-center">
+        <b>Minuta de Procuração Pública</b>
+      </p>
+
+      <p>
+        Aos <b><%= [•] ([•]) %></b> dias do mês de <b><%= [•] %></b>do ano de <b>2021 (dois mil e vinte e um)</b>, nesta Cidade e Capital do Estado da Bahia, no endereço <b><%= [•] %></b>, perante mim escrevente, compareceu como outorgante: <b>Cedente</b>, <b>brasileiro(a)</b>, <b>estado civil</b>, <b>profissão</b>, inscrito no <b>RG n.º <%= xx %></b> e <b>CPF/ME sob o n.º <%= xx %></b>, estabelecido no <b><%= endereço %></b>, os quais ficam arquivados nestas notas na pasta <span class="lines">____</span>, sob nº <span class="lines">____</span>. O presente foi identificado pelos documentos acima mencionados e a mim exibidos no original, do que dou fé. Pelo outorgante, na forma representada, me foi dito que por este instrumento e na melhor forma de direito nomeia e constitui sua bastante procuradora: <b class="underline">BRV ASSESSORIA E PLANEJAMENTO EMPRESARIAL LTDA.</b>, sociedade limitada com sede na Avenida Governador Carlos de Lima Cavalcante, 3995, Loja 07, CEP 53130-555, na cidade de Olinda, Estado de Pernambuco, inscrita no CNPJ/ME n.º 36.269.706/0001-09 com seu Contrato Social arquivado na JUCEPE em 06/02/2020, com o NIRE nº 26202542230, neste ato representado nos termos de seu Contrato Social, por seus sócios administradores <b class="underline">BERNARDO NUNES RAMOS DA CUNHA</b>, declarando ser brasileiro, casado, advogado, inscrito no CPF/MF sob o nº 779.538.355-68, portador da Cédula de Identidade nº 834674750 SSP/BA, residente e domiciliado na Av. Epitácio Pessoa, nº 2870, cidade do Rio de Janeiro, Estado do Rio de janeiro, CEP:22.471-003, <b class="underline">BRUNO CHAMUSCA FERREIRA GUERRA</b>, declarando ser brasileiro, casado, administrador de empresas, inscrito no CPF/MF sob o nº 810.704.035-04, portador da Cédula de Identidade nº 0.648.313.379-SSP/BA, residente e domiciliado na Rua Carlos Weber, nº 790, cidade de São Paulo, Estado de São Paulo, CEP: 05.303-000, <b class="underline">FELIPE NUNES RAMOS DA CUNHA</b>, declarando ser brasileiro, casado, advogado, inscrito no CPF/MF sob o nº 832.738.325-68 e na Ordem dos Advogados do Brasil, Seccional São Paulo sob o nº 403.140, residente e domiciliado na Rua Ernesto de Oliveira, nº 400, apartamento 61, bairro de Jardim Vila Mariana, cidade de São Paulo, Estado de São Paulo, CEP: 04.116-170, <b class="underline">JOEL DE ALBUQUERQUE QUEIROZ NETO</b>, declarando ser brasileiro, casado, administrador, inscrito no CPF/MF sob o nº 027.293.304-02, portador da Cédula de Identidade nº 525.172-SSP/PE, residente e domiciliado na Rua Massacá, nº 325 Bl B, bairro Alto de Pinheiros, cidade de São Paulo, Estado de São Paulo, CEP: 05.465-050, <b class="underline">JULIAN EFREN OSSA DAVILA</b>, declarando ser colombiano, casado, empresário, inscrito no CPF/MF sob o nº 234.126.338-01, portador da Cédula de Identidade nº V673381 – MCGPI/DIREX/DPF, residente e domiciliado na Avenida Paulista, nº 960, cidade de São Paulo, Estado de São Paulo, CEP: 01.310-100 e <b class="underline">MATHEUS PESSOA DE ANDRADE QUEIROZ</b>, declarando ser brasileiro, casado, economista, inscrito no CPF/MF sob o nº 864.877.444-68, portador da Cédula de Identidade nº 2.819.821-SSP/PE, residente e domiciliado na Rua de Apipucos, nº 685, apartamento 501, torre B, bairro do Monteiro, cidade do Recife, Estado de Pernambuco, CEP: 52.071-640 (“<b>Outorgados</b>”); <b>ao qual confere poderes para</b> os Outorgados, na qualidade de mandatário, em <b>caráter irrevogável, irretratável</b> e livre de prestação de contas, observado o disposto no artigo 684 do Código Civil Brasileiro, concedendo-lhes exclusividade de negociação e cessão de credito, para o fim especial de vender, prometer vender, ceder, anuir, permutar, alienar ou a qualquer título em direito permitido, transferir ao <b><%= Fundo xx %></b>, fundo de investimento em direitos creditórios não-padronizados, nos termos da Resolução do CMN nº 2.907, de 29 de novembro de 2001, da Instrução CVM 356 e da Instrução CVM 444, inscrito no CNPJ/ME sob o nº <b><%= xx %></b> (“<b>Promitente Cessionário</b>”), os créditos oriundos do <b>Precatório n° <%= xx %></b>, o qual decorre da <b>Ação Judicial n° <%= xx %></b>, que tramitou perante a <b><%= xx.ª Vara da Fazenda Pública de xx %></b> (“<b>Precatório</b>”), <b class="underline">pelas condições ajustadas no “Contrato de Promessa de Cessão de Precatório”, celebrado em [•]/[•]/[•]</b>, entre o Outorgante e o Promitente Cessionário, ficando os Outorgados investidos de poderes especiais para, agindo isoladamente, a qualquer tempo firmarem Escritura Pública de Cessão em nome do Outorgante com o Promitente Cessionário e dar-lhe integral cumprimento, enfim, praticar todos os atos necessários para o bom e fiel cumprimento do presente mandato. De como assim disseram, do que dou fé, me pediram e lhes lavrei este instrumento, que depois de lido em voz alta e clara, foi achado em tudo conforme, aceitam, outorgam e assinam, dou fé. - Emolumentos: R$[●]; Estado: R$[●]; IPESP: R$[●]; Registro Civil: R$[●]; Tribunal de Justiça: R$[●]; Santa casa: R$[●]; Imposto ao Município: R$[●]; Ministério Público: R$[●]; Total: R$[●]. Guia nº [●]/2021.
+      </p>
+    </section>
+
+    <p style="page-break-after: always;"></p>
+    <p style="page-break-before: always;"></p>
+
+    <section>
+      <p class="underline text-center">
+        <b>Anexo III – Declaração do Escritório de Advocacia atuante na Ação Judicial n.º <%= xx %></b>
+      </p>
+
+      <br>
+
+      <p class="text-center">
+        <b>DECLARAÇÃO</b>
+      </p>
+    </section>
+
+    <p style="page-break-after: always;"></p>
+    <p style="page-break-before: always;"></p>
+
+    <section>
+      <p class="text-center underline">
+        <b>Anexo IV – Cópia do Contrato de Prestação de Serviços Advocatícios Celebrado entre o Cedente e seu respectivo Patrono</b>
+      </p>
+    </section>
+
+  </main>
+</body>
+
+</html>
+
+<!-- <p style="page-break-after: always;"></p>
+<p style="page-break-before: always;"></p> -->

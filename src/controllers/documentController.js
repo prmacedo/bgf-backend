@@ -352,7 +352,7 @@ router.get('/download/contract/pdf/:id', async (request, response) => {
     'authorization': request.headers.authorization
   })
 
-  const urlToDownload = `${process.env.APP_URL}/generate/proposal/pdf/${id}`;
+  const urlToDownload = `${process.env.APP_URL}/generate/contract/pdf/${id}`;
 
   await page.goto(urlToDownload, {
     waitUntil: 'networkidle0'
@@ -412,7 +412,7 @@ router.get('/generate/contract/pdf/:id', async (request, response) => {
     document.liquidValue = formatNumber.format(document.liquidValue).split(" ")[1]
     document.proposalValue = formatNumber.format(document.proposalValue).split(" ")[1]
 
-    const filePath = path.join(__dirname, "../", "reports", "proposal.ejs")
+    const filePath = path.join(__dirname, "../", "reports", "contract.ejs")
     ejs.renderFile(filePath, { document }, (err, html) => {
       if (err) {
         return response.send('Erro na leitura do arquivo')
