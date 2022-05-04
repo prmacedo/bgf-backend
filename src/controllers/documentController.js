@@ -3,6 +3,7 @@ const { PrismaClient } = require('@prisma/client');
 const ejs = require('ejs')
 const path = require('path')
 const puppeteer = require('puppeteer')
+const extenso = require('extenso')
 
 const authMiddleware = require('../middlewares/auth');
 
@@ -363,7 +364,14 @@ router.get('/download/contract/pdf/:id', async (request, response) => {
   const pdf = await page.pdf({
     printBackground: true,
     format: 'Letter',
-    path: "./src/contrato.pdf"
+    path: "./src/contrato.pdf",
+    margin: {
+      top: '2.5cm',
+      bottom: '2.5cm',
+      left: '3cm',
+      right: '3cm'
+    }
+    
   })
 
   await browser.close()
@@ -389,7 +397,11 @@ router.get('/generate/contract/pdf/:id', async (request, response) => {
     const document = await prisma.document.findUnique({
       include: {
         client: true,
-        assignee: true
+        assignee: {
+          include: {
+            admin: true
+          }
+        }
       },
       where: {
         id: Number(id)
@@ -398,28 +410,74 @@ router.get('/generate/contract/pdf/:id', async (request, response) => {
       await prisma.$disconnect();
     });
 
+    const extensoOptions = { number: { decimal: 'informal' }}
     const formatNumber = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 
-    document.contractDate = (new Date(document.contractDate)).toLocaleDateString('pt-BR')
+    const client = {
+      name: document.client.name,
+      firstName: document.client.name.split(' ')[0],
+      nationality: document.client.nationality,
+      maritalStatus: document.client.maritalStatus,
+      profession: document.client.profession,
+      rg: document.client.rg,
+      cpf: document.client.cpf,
+      fullAddress: `${document.client.street}, ${document.client.district}, ${document.client.city} - ${document.client.uf}, CEP ${document.client.cep}`,
+      address: `${document.client.street}, ${document.client.district}`,
+      cep: document.client.cep,
+      city: document.client.city,
+      uf: document.client.uf,
+      telephone: document.client.telephone,
+      email: document.client.email
+    }
 
-    document.value = formatNumber.format(document.value).split(" ")[1]
-    document.correction = formatNumber.format(document.correction).split(" ")[1]
-    document.fee = formatNumber.format(document.fee).split(" ")[1]
-    document.preference = formatNumber.format(document.preference).split(" ")[1]
-    document.taxes = formatNumber.format(document.taxes).split(" ")[1]
-    document.percentage = formatNumber.format(document.percentage).split(" ")[1]
-    document.updatedValue = formatNumber.format(document.updatedValue).split(" ")[1]
-    document.liquidValue = formatNumber.format(document.liquidValue).split(" ")[1]
-    document.proposalValue = formatNumber.format(document.proposalValue).split(" ")[1]
+    const assignee = {
+      name: document.assignee.name,
+      cnpj: document.assignee.cnpj,
+      email: document.assignee.email,
+      telephone: document.assignee.telephone,
+      address: `${document.assignee.street}, ${document.assignee.district}`,
+      cep: document.assignee.cep,
+      city: document.assignee.city,
+      uf: document.assignee.uf
+    }
+    
+    const admin = {
+      name: document.assignee.admin.name,
+      cnpj: document.assignee.admin.cnpj,
+      address: `${document.assignee.admin.street}, ${document.assignee.admin.district}`,
+      city: document.assignee.admin.city,
+      uf: document.assignee.admin.uf
+    };
+
+    const contract = {
+      type: document.type,
+      process: document.process,
+      entity: document.entity,
+      precatory: document.precatory,
+      farmCourt: document.farmCourt,
+      precatoryValue: formatNumber.format(document.precatoryValue).split(" ")[1],
+      precatoryValueString: extenso(document.precatoryValue, extensoOptions),
+      percentage: document.percentage,
+      percentageString: extenso(document.percentage, extensoOptions),
+      date: (new Date(document.contractDate)).toLocaleDateString('pt-BR'),
+      year: (new Date(document.contractDate)).getFullYear(),
+      place: document.place
+    }
+
+    // console.log(document);
+    
+    // document.contractDate = (new Date(document.contractDate)).toLocaleDateString('pt-BR')
+    // document.value = formatNumber.format(document.value).split(" ")[1]
 
     const filePath = path.join(__dirname, "../", "reports", "contract.ejs")
-    ejs.renderFile(filePath, { document }, (err, html) => {
+    ejs.renderFile(filePath, { contract, assignee, admin, client }, (err, html) => {
       if (err) {
-        return response.send('Erro na leitura do arquivo')
+        console.log(err);
+        return response.send('Erro na leitura do arquivo');
       }
 
       // enviar para o navegador
-      return response.send(html)
+      return response.send(html);
     })
   } catch (error) {
     return response.send({ error: error.message });

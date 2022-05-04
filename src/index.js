@@ -1,6 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 //const path = require('path');
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+const bcrypt = require('bcryptjs');
 
 const app = express();
 
@@ -13,6 +16,43 @@ app.use(express.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {
   res.send({ ok: true });
+});
+
+app.post('/firstuser', async (req, res) => {
+  const { name, telephone, email, type } = req.body;
+
+  try {
+    const alreadyExists = await prisma.user.findUnique({
+      where: {
+        email
+      }
+    });
+
+    if (alreadyExists) {
+      return res.send({ error: 'User already exists' })
+    }
+
+    const password = await bcrypt.hash(process.env.DEFAULT_PASSWORD, 10);
+
+    const user = await prisma.user.create({
+      data: {
+        name,
+        telephone,
+        email,
+        password,
+        type
+      }
+    }).finally(async () => {
+      await prisma.$disconnect();
+    });
+
+    user.password = undefined;
+
+    return res.send(user);
+  } catch (error) {
+    console.log(error);
+    return res.send({ error: 'Registration failed' });
+  }
 });
 
 require('./controllers/authController')(app);
