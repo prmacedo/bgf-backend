@@ -4,8 +4,14 @@ const ejs = require('ejs')
 const path = require('path')
 const puppeteer = require('puppeteer')
 const extenso = require('extenso')
+const cnpjValidator = require('node-cnpj');
+const cpfValidator = require('node-cpf');
+
 
 const authMiddleware = require('../middlewares/auth');
+
+const ufs = require('../utils/ufs.json')
+const maritalStatus = require('../utils/maritalStatus.json')
 
 const prisma = new PrismaClient();
 const router = express.Router();
@@ -417,36 +423,36 @@ router.get('/generate/contract/pdf/:id', async (request, response) => {
       name: document.client.name,
       firstName: document.client.name.split(' ')[0],
       nationality: document.client.nationality,
-      maritalStatus: document.client.maritalStatus,
+      maritalStatus: maritalStatus.find(status => status.value === document.client.maritalStatus).label,
       profession: document.client.profession,
       rg: document.client.rg,
-      cpf: document.client.cpf,
+      cpf: cpfValidator.mask(document.client.cpf),
       fullAddress: `${document.client.street}, ${document.client.district}, ${document.client.city} - ${document.client.uf}, CEP ${document.client.cep}`,
       address: `${document.client.street}, ${document.client.district}`,
       cep: document.client.cep,
       city: document.client.city,
-      uf: document.client.uf,
+      uf: ufs.find(uf => uf.value === document.client.uf).label,
       telephone: document.client.telephone,
       email: document.client.email
     }
 
     const assignee = {
       name: document.assignee.name,
-      cnpj: document.assignee.cnpj,
+      cnpj: cnpjValidator.mask(document.assignee.cnpj),
       email: document.assignee.email,
       telephone: document.assignee.telephone,
       address: `${document.assignee.street}, ${document.assignee.district}`,
       cep: document.assignee.cep,
       city: document.assignee.city,
-      uf: document.assignee.uf
+      uf: ufs.find(uf => uf.value === document.assignee.uf).label
     }
     
     const admin = {
       name: document.assignee.admin.name,
-      cnpj: document.assignee.admin.cnpj,
+      cnpj: cnpjValidator.mask(document.assignee.admin.cnpj),
       address: `${document.assignee.admin.street}, ${document.assignee.admin.district}`,
       city: document.assignee.admin.city,
-      uf: document.assignee.admin.uf
+      uf: ufs.find(uf => uf.value === document.assignee.admin.uf).label
     };
 
     const contract = {

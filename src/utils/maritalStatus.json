@@ -1,0 +1,7 @@
+[
+  { "value": "single", "label": "Solteiro(a)" },
+  { "value": "married", "label": "Casado(a)" },
+  { "value": "separated", "label": "Separado(a)" },
+  { "value": "divorced", "label": "Divorciado(a)" },
+  { "value": "widowed", "label": "Viúvo(a)" }
+]
