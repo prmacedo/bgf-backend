@@ -66,7 +66,7 @@ router.post('/admin', async (req, res) => {
 
   if (!cnpjValidator.validate(cnpj)) {
     return res.status(422).send({ error: 'Invalid CNPJ'})
-  }
+  }  
 
   try {
     const admin = await prisma.administrator.create({
@@ -82,11 +82,11 @@ router.post('/admin', async (req, res) => {
       }
     }).finally(async () => {
       await prisma.$disconnect();
-    });
+    });    
 
     return res.send(admin);
   } catch (error) {
-    return res.send({ error: error.message });
+    return res.status(400).send({ error: error.message });
   }
 });
 

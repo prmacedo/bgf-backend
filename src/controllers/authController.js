@@ -29,15 +29,15 @@ router.post('/authenticate', async(req, res) => {
 
     
     if (!user) {
-      return res.send({ error: 'User not found'});
+      return res.status(422).send({ error: 'User not found'});
     }
 
     if (!user.active) {
-      return res.send({ error: 'User inactive' })
+      return res.status(403).send({ error: 'User inactive' })
     }
 
     if(!await bcrypt.compare(password, user.password)) {
-      return res.send({ error: 'Invalid password' })
+      return res.status(422).send({ error: 'Invalid password' })
     }
 
     user.password = undefined;
@@ -54,7 +54,7 @@ router.post('/authenticate', async(req, res) => {
     });
 
   } catch (error) {
-    res.send({ error: error.message })
+    res.status(200).send({ error: error.message })
   }
 });
 

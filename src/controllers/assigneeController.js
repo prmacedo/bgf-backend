@@ -138,7 +138,7 @@ router.post('/assignee', async (req, res) => {
 
     return res.send(assignee);
   } catch (error) {
-    return res.send({ error: error.message });
+    return res.status(400).send({ error: error.message });
   }
 });
 

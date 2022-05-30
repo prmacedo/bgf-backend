@@ -7,6 +7,8 @@ const fastcsv = require("fast-csv");
 const fs = require("fs");
 
 const authMiddleware = require('../middlewares/auth');
+const genders = require('../utils/genders.json');
+const maritalStatus = require('../utils/maritalStatus.json');
 
 const prisma = new PrismaClient();
 const router = express.Router();
@@ -172,24 +174,43 @@ router.get('/export/csv', async (req, res) => {
   try {
     const clientList = await prisma.client.findMany({
       include: {        
-        project: true
+        project: true,
       }
     }).finally(async () => {
       await prisma.$disconnect();
     });
 
-    clientList.map(client => (
-      client.cpf = cpfValidator.mask(client.cpf)
-    ))
-    
-    clientList.map(client => (
-      client.project = client.project.name,
-      client.partnerId = undefined,
-      client.projectId = undefined
-    ))
+    console.log(clientList);
+
+    if (!clientList) {
+      res.status(400).send({ error: "No data to generate CSV" })
+    }
   
+    const formattedClientList = clientList.map(client => (
+      {
+        "Nome": client.name,
+        "Status": client.status,
+        "Projeto": client.project.name,
+        "Nacionalidade": client.nationality,
+        "Sexo biológico": genders.find(gender => gender.value === client.gender).label,
+        "RG": client.rg,
+        "CPF": cpfValidator.mask(client.cpf),
+        "Profissão": client.profession,
+        "Telefone": client.telephone,
+        "E-mail": client.email,
+        "CEP": client.cep,
+        "Cidade": client.city,
+        "Endereço": client.street,
+        "UF": client.uf,
+        "Bairro": client.district,
+        "Complemento": client.complement,
+        "Estado civil": maritalStatus.find(status => status.value === client.maritalStatus).label,
+        "Criado em": client.createdAt.toLocaleDateString('pt-BR')
+      }
+    ))
+
     fastcsv
-      .write(clientList, { headers: true })
+      .write(formattedClientList, { headers: true, delimiter: ';', quote: '"', writeBOM: true })
       .on("finish", function () {
         console.log("Write to CSV successfully!");
       })
@@ -209,9 +230,7 @@ router.get('/export/csv', async (req, res) => {
     });
   } catch (error) {
     return res.send({ error: error.message });
-  }
-  
-
+  } 
 })
 
 router.post('/client', async (req, res) => {
@@ -267,9 +286,9 @@ router.post('/client', async (req, res) => {
       await prisma.$disconnect();
     });
 
-    return res.send(client)
+    return res.status(200).send(client)
   } catch (error) {
-    return res.send({ error: error.message });
+    return res.status(400).send({ error: error.message });
   }
 });
 

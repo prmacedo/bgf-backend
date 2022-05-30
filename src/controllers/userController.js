@@ -108,7 +108,7 @@ router.post('/user', async (req, res) => {
     });
 
     if (alreadyExists) {
-      return res.send({ error: 'User already exists' })
+      return res.status(409).send({ error: 'User already exists' })
     }
 
     const password = await bcrypt.hash(process.env.DEFAULT_PASSWORD, 10);
@@ -127,9 +127,9 @@ router.post('/user', async (req, res) => {
 
     user.password = undefined;
 
-    return res.send(user);
+    return res.status(201).send(user);
   } catch (error) {
-    return res.send({ error: 'Registration failed' });
+    return res.status(400).send({ error: 'Registration failed' });
   }
 });
 
@@ -142,6 +142,16 @@ router.patch('/user/:id', async (req, res) => {
     type,
     active
   } = req.body;
+
+  const alreadyExists = await prisma.user.findUnique({
+    where: {
+      email
+    }
+  });
+
+  if (alreadyExists.id !== Number(id)) {
+    return res.status(409).send({ error: 'User already exists' })
+  }
 
   try {
     const user = await prisma.user.update({
@@ -161,7 +171,7 @@ router.patch('/user/:id', async (req, res) => {
 
     return res.send(user);
   } catch (error) {
-    return res.send({ error: error.message });    
+    return res.status(400).send({ error: error.message });    
   }
 });
 
