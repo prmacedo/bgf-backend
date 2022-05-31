@@ -356,7 +356,8 @@ router.get('/download/contract/pdf/:id', async (request, response) => {
   const page = await browser.newPage()
 
   page.setExtraHTTPHeaders({
-    'authorization': request.headers.authorization
+    'authorization': request.headers.authorization,
+    'Access-Control-Allow-Origin': process.env.CORS_ORIGIN_URL
   })
 
   const urlToDownload = `${process.env.APP_URL}/generate/contract/pdf/${id}`;
