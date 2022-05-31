@@ -352,7 +352,7 @@ router.get('/generate/proposal/pdf/:id', async (request, response) => {
 router.get('/download/contract/pdf/:id', async (request, response) => {
   const { id } = request.params;
 
-  const browser = await puppeteer.launch()
+  const browser = await puppeteer.launch({ args: ['--no-sandbox'] })
   const page = await browser.newPage()
 
   page.setExtraHTTPHeaders({
