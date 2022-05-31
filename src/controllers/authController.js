@@ -42,7 +42,7 @@ router.post('/authenticate', async(req, res) => {
 
     user.password = undefined;
 
-    res.send({ 
+    res.status(200).send({ 
       user, 
       token: generateToken({ 
         id: user.id, 
@@ -54,7 +54,7 @@ router.post('/authenticate', async(req, res) => {
     });
 
   } catch (error) {
-    res.status(200).send({ error: error.message })
+    res.status(400).send({ error: error.message })
   }
 });
 
