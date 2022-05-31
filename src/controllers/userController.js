@@ -175,6 +175,28 @@ router.patch('/user/:id', async (req, res) => {
   }
 });
 
+router.patch('/user/active/:id', async (req, res) => {
+  const { id } = req.params;
+  const { active } = req.body;
+
+  try {
+    const user = await prisma.user.update({
+      where: {
+        id: Number(id)
+      },
+      data: {
+        active
+      }
+    }).finally(async () => {
+      await prisma.$disconnect();
+    });
+
+    return res.status(200).send(user);
+  } catch (error) {
+    return res.status(400).send({ error: error.message });    
+  }
+});
+
 router.patch('/user/password/:id', async (req, res) => {
   const { id } = req.params;
   const password = await bcrypt.hash(req.body.password, 10);
