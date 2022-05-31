@@ -11,7 +11,8 @@ const corsConfig = {
   "origin": process.env.CORS_ORIGIN_URL,
   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
   "preflightContinue": false,
-  "optionsSuccessStatus": 204
+  "optionsSuccessStatus": 204,
+  "allowedHeaders": ['Content-Type', 'Authorization']
 }
 
 app.use(cors(corsConfig));
