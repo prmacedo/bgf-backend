@@ -7,7 +7,14 @@ const bcrypt = require('bcryptjs');
 
 const app = express();
 
-app.use(cors());
+const corsConfig = {
+  "origin": process.env.CORS_ORIGIN_URL,
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
+}
+
+app.use(cors(corsConfig));
 
 app.use(express.static("public"));
 //app.use("/file", express.static(path.resolve(__dirname, "..", "tmp", "attachment")));
