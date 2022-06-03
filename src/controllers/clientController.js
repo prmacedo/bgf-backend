@@ -145,7 +145,7 @@ router.get('/clients/:name/:project/:status', async (req, res) => {
   if (status !== 'undefined') {
     const statusFilterObj = {
       status: {
-        contains: status,
+        equals: status,
         mode: 'insensitive'
       }
     }
@@ -158,7 +158,10 @@ router.get('/clients/:name/:project/:status', async (req, res) => {
         AND: arrayToSearch,
       },
       include: {
-        project: true
+        project: true,
+        _count: {
+          select: { attachments: true }
+        }
       }
     }).finally(async () => {
       await prisma.$disconnect();
@@ -250,7 +253,8 @@ router.post('/client', async (req, res) => {
     district,
     complement,
     projectId,
-    partnerId
+    partnerId,
+    status
   } = req.body;
 
   const cpf = cpfValidator.unMask(req.body.cpf);
@@ -280,7 +284,8 @@ router.post('/client', async (req, res) => {
         project: {
           connect: { id: projectId }
         },
-        partner: partnerId ? { connect: { id: partnerId } } : undefined
+        partner: partnerId ? { connect: { id: partnerId } } : undefined,
+        status
       }
     }).finally(async () => {
       await prisma.$disconnect();
@@ -311,9 +316,10 @@ router.patch('/client/:id', async (req, res) => {
     district,
     complement,
     projectId,
-    partnerId
+    partnerId,
+    status
   } = req.body;
-
+  
   const cpf = cpfValidator.unMask(req.body.cpf);
 
   if (!cpfValidator.validate(cpf)) {
@@ -342,12 +348,13 @@ router.patch('/client/:id', async (req, res) => {
         district,
         complement,
         projectId,
-        partnerId
+        partnerId,
+        status
       }
     }).finally(async () => {
       await prisma.$disconnect();
     });
-
+    
     return res.send(client);
   } catch (error) {
     return res.send({ error: error.message });
