@@ -6,7 +6,7 @@ const puppeteer = require('puppeteer')
 const extenso = require('extenso')
 const cnpjValidator = require('node-cnpj');
 const cpfValidator = require('node-cpf');
-
+const generateDocx = require('../utils/generateDocx')
 
 const authMiddleware = require('../middlewares/auth');
 
@@ -349,6 +349,55 @@ router.get('/generate/proposal/pdf/:id', async (request, response) => {
   }  
 })
 
+router.get('/download/proposal/docx/:id', async (request, response) => {
+  const { id } = request.params;
+
+  try {
+    const document = await prisma.document.findUnique({
+      include: {
+        client: true,
+        assignee: true
+      },
+      where: {
+        id: Number(id)
+      }
+    }).finally(async () => {
+      await prisma.$disconnect();
+    });
+  
+    const formatNumber = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    document.proposalDate = (new Date(document.proposalDate)).toLocaleDateString('pt-BR')
+    
+    document.value = formatNumber.format(document.value)
+    document.correction = formatNumber.format(document.correction)
+    document.fee = formatNumber.format(document.fee)
+    document.preference = '- ' + formatNumber.format(document.preference)
+    document.taxes = '- ' + formatNumber.format(document.taxes)
+    document.percentage = formatNumber.format(document.percentage).split(" ")[1] + '%'
+    document.updatedValue = formatNumber.format(document.updatedValue)
+    document.liquidValue = formatNumber.format(document.liquidValue)
+    document.proposalValue = formatNumber.format(document.proposalValue)
+    document.clientName = document.client.name
+    document.assigneeName = document.assignee.name
+    document.cnpj = (document.type === 'BGF' ? '33.521.132/0001-18' : '36.269.706/0001-09')
+    generateDocx.execute("proposal.docx", document)
+
+    const filePath = path.resolve(__dirname, "..", "output.docx")
+    const name = 'Proposta.pdf'
+
+    return response.download(filePath, name, (err) => {
+      if (err)
+        console.log(err)
+      
+      console.log(filePath);
+    });
+    
+  } catch (error) {
+    return response.send({ error: error.message });
+  }    
+})
+
 router.get('/download/contract/pdf/:id', async (request, response) => {
   const { id } = request.params;
 
@@ -468,7 +517,7 @@ router.get('/generate/contract/pdf/:id', async (request, response) => {
       percentageString: extenso(document.percentage, extensoOptions),
       date: (new Date(document.contractDate)).toLocaleDateString('pt-BR'),
       year: (new Date(document.contractDate)).getFullYear(),
-      place: document.place
+      place: document.place,
     }
 
     // console.log(document);
@@ -491,6 +540,107 @@ router.get('/generate/contract/pdf/:id', async (request, response) => {
   }
 
 
+
+})
+
+router.get('/download/contract/docx/:id', async (request, response) => {
+  const { id } = request.params;
+
+  try {
+    const document = await prisma.document.findUnique({
+      include: {
+        client: true,
+        assignee: {
+          include: {
+            admin: true
+          }
+        }
+      },
+      where: {
+        id: Number(id)
+      }
+    }).finally(async () => {
+      await prisma.$disconnect();
+    });
+
+    const extensoOptions = { number: { decimal: 'informal' }}
+    const formatNumber = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    const client = {
+      clientName: document.client.name,
+      clientFirstName: document.client.name.split(' ')[0],
+      clientNationality: document.client.nationality,
+      clientMaritalStatus: maritalStatus.find(status => status.value === document.client.maritalStatus).label,
+      clientProfession: document.client.profession,
+      clientRG: document.client.rg,
+      clientCPF: cpfValidator.mask(document.client.cpf),
+      clientFullAddress: `${document.client.street}, ${document.client.district}, ${document.client.city} - ${document.client.uf}, CEP ${document.client.cep}`,
+      clientAddress: `${document.client.street}, ${document.client.district}`,
+      clientCEP: document.client.cep,
+      clientCity: document.client.city,
+      clientUF: ufs.find(uf => uf.value === document.client.uf).label,
+      clientTelephone: document.client.telephone,
+      clientEmail: document.client.email
+    }
+
+    const assignee = {
+      assigneeName: document.assignee.name,
+      assigneeCNPJ: cnpjValidator.mask(document.assignee.cnpj),
+      assigneeEmail: document.assignee.email,
+      assigneeTelephone: document.assignee.telephone,
+      assigneeAddress: `${document.assignee.street}, ${document.assignee.district}`,
+      assigneeCEP: document.assignee.cep,
+      assigneeCity: document.assignee.city,
+      assigneeUF: ufs.find(uf => uf.value === document.assignee.uf).label
+    }
+    
+    const admin = {
+      adminName: document.assignee.admin.name,
+      adminCNPJ: cnpjValidator.mask(document.assignee.admin.cnpj),
+      adminAddress: `${document.assignee.admin.street}, ${document.assignee.admin.district}`,
+      adminCity: document.assignee.admin.city,
+      adminUF: ufs.find(uf => uf.value === document.assignee.admin.uf).label
+    };
+
+    const contract = {
+      type: document.type,
+      process: document.process,
+      entity: document.entity,
+      precatory: document.precatory,
+      farmCourt: document.farmCourt,
+      precatoryValue: formatNumber.format(document.precatoryValue).split(" ")[1],
+      precatoryValueString: extenso(document.precatoryValue, extensoOptions),
+      percentage: document.percentage,
+      percentageString: extenso(document.percentage, extensoOptions),
+      date: (new Date(document.contractDate)).toLocaleDateString('pt-BR'),
+      year: (new Date(document.contractDate)).getFullYear(),
+      place: document.place
+    }
+
+    const data = {
+      ...client,
+      ...assignee,
+      ...admin,
+      ...contract
+    }
+
+console.log(data);
+
+    generateDocx.execute("contract.docx", data)
+
+    const filePath = path.resolve(__dirname, "..", "output.docx")
+    const name = 'Contrato.pdf'
+
+    return response.download(filePath, name, (err) => {
+      if (err)
+        console.log(err)
+      
+      console.log(filePath);
+    });
+    
+  } catch (error) {
+    return response.send({ error: error.message });
+  }
 
 })
 
