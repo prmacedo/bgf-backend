@@ -59,7 +59,8 @@ router.post('/admin', async (req, res) => {
     city,
     uf,
     district,
-    complement
+    complement,
+    assigneeId
   } = req.body;
 
   const cnpj = cnpjValidator.unMask(req.body.cnpj);
@@ -78,7 +79,12 @@ router.post('/admin', async (req, res) => {
         city,
         uf,
         district,
-        complement
+        complement,
+        assignees: {
+          connect: {
+            id: assigneeId
+          }
+        }
       }
     }).finally(async () => {
       await prisma.$disconnect();

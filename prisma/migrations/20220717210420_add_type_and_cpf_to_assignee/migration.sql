@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Assignee" ADD COLUMN     "cpf" VARCHAR(14),
+ADD COLUMN     "type" INTEGER NOT NULL DEFAULT 1,
+ALTER COLUMN "cnpj" DROP NOT NULL;

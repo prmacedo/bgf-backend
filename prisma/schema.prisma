@@ -75,7 +75,9 @@ model Partner {
 model Assignee {
   id         Int          @id @default(autoincrement())
   name       String
-  cnpj       String       @db.VarChar(18)
+  type       Int          @default(1)
+  cpf        String?      @db.VarChar(14)
+  cnpj       String?      @db.VarChar(18)
   email      String       
   telephone  String       
   cep        String       @db.VarChar(10)
@@ -84,8 +86,7 @@ model Assignee {
   uf         String       @db.Char(2)
   district   String
   complement String?
-  admin      Administrator @relation(name: "AdministratedBy", fields: [adminId], references: [id])
-  adminId    Int
+  admin      Administrator? 
   document   Document[]   @relation("AssigneeIn")
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
@@ -101,7 +102,8 @@ model Administrator {
   uf         String       @db.Char(2)
   district   String
   complement String?
-  assignees  Assignee[]   @relation("AdministratedBy")
+  assignees  Assignee     @relation(fields: [assigneeId], references: [id])
+  assigneeId Int          
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
 }
