@@ -489,6 +489,7 @@ router.get('/generate/contract/pdf/:id', async (request, response) => {
     const assignee = {
       name: document.assignee.name,
       cnpj: cnpjValidator.mask(document.assignee.cnpj),
+      cpf: cpfValidator.mask(document.assignee.cpf),
       email: document.assignee.email,
       telephone: document.assignee.telephone,
       address: `${document.assignee.street}, ${document.assignee.district}`,
@@ -498,11 +499,11 @@ router.get('/generate/contract/pdf/:id', async (request, response) => {
     }
     
     const admin = {
-      name: document.assignee.admin.name,
-      cnpj: cnpjValidator.mask(document.assignee.admin.cnpj),
-      address: `${document.assignee.admin.street}, ${document.assignee.admin.district}`,
-      city: document.assignee.admin.city,
-      uf: ufs.find(uf => uf.value === document.assignee.admin.uf).label
+      name: document.assignee.admin?.name || 'Não informado',
+      cnpj: (document.assignee.type == 1) ? cnpjValidator.mask(document.assignee.admin.cnpj) : 'Não informado',
+      address: `${document.assignee.admin?.street || 'Não informado'}, ${document.assignee.admin?.district || 'Não informado'}`,
+      city: document.assignee.admin?.city || 'Não informado',
+      uf: (ufs.find(uf => uf.value === document.assignee.admin?.uf)?.label) || 'Não informado'
     };
 
     const contract = {
@@ -585,7 +586,8 @@ router.get('/download/contract/docx/:id', async (request, response) => {
 
     const assignee = {
       assigneeName: document.assignee.name,
-      assigneeCNPJ: cnpjValidator.mask(document.assignee.cnpj),
+      assigneeType: (document.assignee.type == 1) ? 'CNPJ/ME' : 'CPF/ME',
+      assigneeDoc: (document.assignee.type == 1) ? cnpjValidator.mask(document.assignee.cnpj) : cpfValidator.mask(document.assignee.cpf),
       assigneeEmail: document.assignee.email,
       assigneeTelephone: document.assignee.telephone,
       assigneeAddress: `${document.assignee.street}, ${document.assignee.district}`,
@@ -595,11 +597,11 @@ router.get('/download/contract/docx/:id', async (request, response) => {
     }
     
     const admin = {
-      adminName: document.assignee.admin.name,
-      adminCNPJ: cnpjValidator.mask(document.assignee.admin.cnpj),
-      adminAddress: `${document.assignee.admin.street}, ${document.assignee.admin.district}`,
-      adminCity: document.assignee.admin.city,
-      adminUF: ufs.find(uf => uf.value === document.assignee.admin.uf).label
+      adminName: document.assignee.admin?.name || 'Não informado',
+      adminCNPJ: (document.assignee.type == 1) ? cnpjValidator.mask(document.assignee.admin.cnpj) : 'Não informado',
+      adminAddress: `${document.assignee.admin?.street || 'Não informado'}, ${document.assignee.admin?.district || 'Não informado'}`,
+      adminCity: document.assignee.admin?.city || 'Não informado',
+      adminUF: (ufs.find(uf => uf.value === document.assignee.admin?.uf)?.label) || 'Não informado'
     };
 
     const contract = {
